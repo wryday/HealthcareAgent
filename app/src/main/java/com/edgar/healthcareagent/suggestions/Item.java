@@ -1,9 +1,5 @@
 package com.edgar.healthcareagent.suggestions;
 
-/**
- * Created by Edgar on 11/15/2016.
- */
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,81 +35,41 @@ public class Item {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The id
-     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     * The id
-     */
     @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     * The label
-     */
     @JsonProperty("label")
     public String getLabel() {
         return label;
     }
 
-    /**
-     *
-     * @param label
-     * The label
-     */
     @JsonProperty("label")
     public void setLabel(String label) {
         this.label = label;
     }
 
-    /**
-     *
-     * @return
-     * The types
-     */
     @JsonProperty("types")
     public List<Type> getTypes() {
         return types;
     }
 
-    /**
-     *
-     * @param types
-     * The types
-     */
     @JsonProperty("types")
     public void setTypes(List<Type> types) {
         this.types = types;
     }
 
-    /**
-     *
-     * @return
-     * The synonym
-     */
     @JsonProperty("synonym")
     public String getSynonym() {
         return synonym;
     }
 
-    /**
-     *
-     * @param synonym
-     * The synonym
-     */
     @JsonProperty("synonym")
     public void setSynonym(String synonym) {
         this.synonym = synonym;
@@ -129,7 +85,14 @@ public class Item {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", types=" + types +
+                ", synonym='" + synonym + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
-
-
-

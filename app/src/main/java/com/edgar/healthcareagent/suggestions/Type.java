@@ -1,9 +1,5 @@
 package com.edgar.healthcareagent.suggestions;
 
-/**
- * Created by Edgar on 11/15/2016.
- */
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,41 +27,21 @@ public class Type {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The id
-     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     * The id
-     */
     @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     * The label
-     */
     @JsonProperty("label")
     public String getLabel() {
         return label;
     }
 
-    /**
-     *
-     * @param label
-     * The label
-     */
     @JsonProperty("label")
     public void setLabel(String label) {
         this.label = label;
@@ -81,8 +57,12 @@ public class Type {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Type{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
-
-
-
-

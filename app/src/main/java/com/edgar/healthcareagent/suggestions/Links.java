@@ -1,9 +1,5 @@
 package com.edgar.healthcareagent.suggestions;
 
-/**
- * Created by Edgar on 11/15/2016.
- */
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,10 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Generated;
-
-/**
- * Created by Edgar on 11/12/2016.
- */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -32,21 +24,11 @@ public class Links {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The self
-     */
     @JsonProperty("self")
     public String getSelf() {
         return self;
     }
 
-    /**
-     *
-     * @param self
-     * The self
-     */
     @JsonProperty("self")
     public void setSelf(String self) {
         this.self = self;
@@ -62,5 +44,11 @@ public class Links {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Links{" +
+                "self='" + self + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
-
