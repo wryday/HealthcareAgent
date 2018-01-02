@@ -2,6 +2,7 @@ package com.edgar.healthcareagent.searchResult;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -10,20 +11,10 @@ public class Consumer {
     private String enUs;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The enUs
-     */
     public String getEnUs() {
         return enUs;
     }
 
-    /**
-     *
-     * @param enUs
-     * The en-us
-     */
     public void setEnUs(String enUs) {
         this.enUs = enUs;
     }
@@ -36,4 +27,11 @@ public class Consumer {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Consumer{" +
+                "enUs='" + enUs + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

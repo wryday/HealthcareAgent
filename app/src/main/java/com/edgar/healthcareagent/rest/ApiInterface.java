@@ -13,10 +13,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
-/**
- * Created by Edgar on 1/2/2017.
- */
-
 public interface ApiInterface {
 
     @GET("suggestions")
@@ -32,5 +28,5 @@ public interface ApiInterface {
     Call<ContentResult> getContentResults(@QueryMap Map<String, String> options);
 
     @POST("token")
-    Call<Token>getToken(@QueryMap Map<String, String> parameters);
+    Call<Token> getToken(@QueryMap Map<String, String> parameters);
 }

@@ -2,6 +2,7 @@ package com.edgar.healthcareagent.searchResult;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -12,56 +13,26 @@ public class Pagination {
     private Integer skip;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The count
-     */
     public Integer getCount() {
         return count;
     }
 
-    /**
-     *
-     * @param count
-     * The count
-     */
     public void setCount(Integer count) {
         this.count = count;
     }
 
-    /**
-     *
-     * @return
-     * The top
-     */
     public Integer getTop() {
         return top;
     }
 
-    /**
-     *
-     * @param top
-     * The top
-     */
     public void setTop(Integer top) {
         this.top = top;
     }
 
-    /**
-     *
-     * @return
-     * The skip
-     */
     public Integer getSkip() {
         return skip;
     }
 
-    /**
-     *
-     * @param skip
-     * The skip
-     */
     public void setSkip(Integer skip) {
         this.skip = skip;
     }
@@ -74,4 +45,13 @@ public class Pagination {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Pagination{" +
+                "count=" + count +
+                ", top=" + top +
+                ", skip=" + skip +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
