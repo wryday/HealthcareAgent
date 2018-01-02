@@ -42,29 +42,4 @@ public class ApiClient {
 
         return retrofit;
     }
-
-    public static Retrofit getTokenClient(String BASE_URL) {
-
-        Interceptor interceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request newRequest = chain.request().newBuilder()
-                        .addHeader("", "")
-                        .build();
-                return null;
-            }
-
-
-        };
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add(interceptor);
-        OkHttpClient client = builder.build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        return retrofit;
-    }
 }

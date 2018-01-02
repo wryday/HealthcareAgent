@@ -1,14 +1,20 @@
 package com.example.edgar.healthcareagent.token;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Token {
-
+    @SerializedName("accessToken")
+    @Expose
     private String accessToken;
+    @SerializedName("tokenType")
+    @Expose
     private String tokenType;
+    @SerializedName("expiresIn")
+    @Expose
     private Integer expiresIn;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    //private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getAccessToken() {
         return accessToken;
@@ -34,12 +40,12 @@ public class Token {
         this.expiresIn = expiresIn;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
+    /*public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
+    } */
 
 }

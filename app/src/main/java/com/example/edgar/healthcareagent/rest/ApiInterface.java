@@ -9,7 +9,6 @@ import com.example.edgar.healthcareagent.token.Token;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -29,9 +28,9 @@ public interface ApiInterface {
     @GET("taxonomy")
     Call<TaxonomyResult> getTaxonomyResults(@QueryMap Map<String, String> options);
 
-    @GET()
-    Call<ContentResult> getContentResults();
+    @GET("content")
+    Call<ContentResult> getContentResults(@QueryMap Map<String, String> options);
 
     @POST("token")
-    Call<Token>getToken(@Body Map<String, String> parameters);
+    Call<Token>getToken(@QueryMap Map<String, String> parameters);
 }

@@ -38,7 +38,60 @@ public class SearchModel extends AppCompatActivity  {
     String choice = reply; //import reply from suggestions search
     SearchModel() throws JSONException {}
 
-    public String getFinalReply(String token) throws JSONException {
+    /*getFinalReply first queries the condition to symptom database to see if
+    * user's choice is a symptom.  If so it returns a list of conditions
+    * associated with the symptoms.  Otherwise it queries the
+    * Healthwise API and looks for it as a condition.*/
+
+    public String getReply(String token, DataBaseHelper myDbHelper) throws JSONException {
+        //First query the database to see if choice is a symptom
+        //If so send back the list.  Otherwise query the api.
+        /*MAKE THIS A SEPARATE METHOD LATER*/
+
+       /*   AUTHOR'S NOTE #1
+
+            NOT GOING TO SEARCH THE DATABASE RIGHT NOW.  TOO MANY
+            COMPLICATIONS:
+            1. SYMPTOM AND CONDITION ON THE SAME LIST CREATE INFINITE QUERY LOOP
+                (SEARCH IS NEVER RESOLVED)
+            2. NEED A SWITCH (STATIC VARIABLE) TO MAKE SURE SEARCH CONTINUES
+                OR AN INFININITE QUERY LOOP HAPPENS
+        try{
+            myDbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try {
+
+            myDbHelper.openDataBase();
+
+        } catch (SQLException sqle) {
+
+            throw sqle;
+
+        }*/
+        //Query the symptomstoconditions database to get the related condition(s)
+        List<String> conditionsFromSymptom = myDbHelper.getConditionList(APIAIchoice);
+        //LEAVING conditionsFromSymptom empty for now getConditionList
+        // automatically programmed to return empty list.  (See AUTHOR'S NOTE #1)
+
+        if (!conditionsFromSymptom.isEmpty()) {
+            String conditionListReply = "";
+            conditionListReply = "The suggested list of topics based on the " +
+                    "symptom " + APIAIchoice + "is ";
+            for (int i = 0; i < conditionsFromSymptom.size(); i++) {
+                conditionListReply += conditionsFromSymptom.get(i);
+                if(i < conditionsFromSymptom.size() - 1){
+                    conditionListReply += ", ";
+                }
+                if (i == conditionsFromSymptom.size() - 2) {
+                    conditionListReply += " and ";
+                }
+            }
+            conditionListReply += ". Please choose from the list of topics.";
+            return conditionListReply;
+        }
+        /*Otherwise query the Healthwise API*/
         String resultFinal = "";
         String searchUrl = "https://search.healthwise.net/v1/search?q="
                 + APIAIrequest + "&top=5&skip=12&num_concepts=12";

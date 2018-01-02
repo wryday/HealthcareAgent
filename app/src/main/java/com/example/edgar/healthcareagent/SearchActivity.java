@@ -24,6 +24,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         final TextToSpeechModel tts = new TextToSpeechModel(this);
+        final DataBaseHelper myDbHelper = new DataBaseHelper(this);
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -31,8 +32,17 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     TokenRequest tokenRequest = new TokenRequest();
                     authToken = tokenRequest.getToken();
-                    String finalReply = searchModel.getFinalReply(authToken);
-                    tts.speakOut(finalReply);
+                    String finalReply = searchModel.getReply(authToken, myDbHelper);
+                   /*if(finalReply.equals("I'm sorry.  " +
+                            "Data on this topic is not available" +
+                            "Please choose another topic")){
+                        finalReply = "";
+                        Intent proceedWithSymptomSearch = new Intent(getBaseContext(),
+                                SearchSymptomsActivity.class);
+                        startActivity(proceedWithSymptomSearch);
+                    }*/
+
+                        tts.speakOut(finalReply);
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -40,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         }).start();
         Intent i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
+        //tts.onDestroy();
         startActivity(i);
     }
     public void speakButtonOnClick3(final View view) {}

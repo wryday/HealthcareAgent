@@ -75,7 +75,7 @@ public class GetAPIAITopicActivity extends AppCompatActivity implements AIListen
        //resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
        APIAIchoice = result.getFulfillment().getSpeech();
-       APIAIrequest = APIAIchoice.replace(' ', '+');
+       APIAIrequest = APIAIchoice.replace(' ', '+');//adds '+' for REST query
 
        Intent i = new Intent(getBaseContext(), SearchActivity.class);
        startActivity(i);

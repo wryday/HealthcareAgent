@@ -4,6 +4,7 @@ package com.example.edgar.healthcareagent;
  * Created by Edgar on 11/15/2016.
  */
 
+import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
@@ -18,9 +19,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TokenRequest {
 
-    public static String token;
+public class TokenRequest{
+
+    public static String authToken;
     private String ClientId = "4488c302a1be4a6ca430b63661843c43";
     private String ClientSecret = "qOGnt7wlB0eQo0pbaEcoXw==";
 
@@ -55,14 +57,73 @@ public class TokenRequest {
             Response response = client.newCall(newRequest).execute();
             String jsonData = response.body().string();
             JSONObject jobject = new JSONObject(jsonData);
-            token = jobject.getString("access_token");
+            authToken = jobject.getString("access_token");
         } catch (IOException e) {
             Log.d("OKHTTP3", "Exception while doing request");
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return token;
+        //sendDataToServer(newRequest, client);
+        return authToken;
+    }
+
+    private void sendDataToServer(Request newRequest, OkHttpClient client) {
+
+        new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                String jsonData = null;
+                JSONObject jobject = null;
+                try {
+                    Response response = client.newCall(newRequest).execute();
+                    jsonData = response.body().string();
+                    jobject = new JSONObject(jsonData);
+                    MainActivity.token = jobject.getString("access_token");
+                    final String backGroundAnswer = jobject.getString("access_token");
+                    return backGroundAnswer;
+                } catch (IOException e) {
+                    Log.d("OKHTTP3", "Exception while doing request");
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return "couldn't get the server";
+                //return getServerResponse(newRequest, client);
+            }
+
+           @Override
+            protected void onPostExecute(String result) {
+               MainActivity.token = result;
+               /*try {
+                   token = get();
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               } catch (ExecutionException e) {
+                   e.printStackTrace();
+               }*/
+           }
+        }.execute();
+    }
+
+    private String getServerResponse(Request newRequest, OkHttpClient client) {
+        String jsonData = null;
+        JSONObject jobject = null;
+        try {
+            Response response = client.newCall(newRequest).execute();
+            jsonData = response.body().string();
+            jobject = new JSONObject(jsonData);
+            //token = jobject.getString("access_token");
+            final String backGroundAnswer = jobject.getString("access_token");
+            return backGroundAnswer;
+        } catch (IOException e) {
+            Log.d("OKHTTP3", "Exception while doing request");
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "couldn't get the server";
     }
 
     private String getEncodedAuthCode() {
@@ -74,4 +135,5 @@ public class TokenRequest {
         result = String.format("Basic " + finalCode);
         return result;
     }
+
 }
