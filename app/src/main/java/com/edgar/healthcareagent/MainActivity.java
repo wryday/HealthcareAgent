@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
             }
         });
+
         return contentUrl[0];
     }
 
@@ -237,10 +238,14 @@ public class MainActivity extends AppCompatActivity implements AIListener {
     private String getEncodedAuthCode() {
         String code = ClientId + ":" + ClientSecret;
         String result;
-        Log.v("OKHTTP3", "Encoding: " + code);
+
+        Log.v(TAG, "Encoding: " + code);
+
         byte[] code2 = code.getBytes();
+
         String finalCode = Base64.encodeToString(code2, Base64.URL_SAFE | Base64.NO_WRAP);
         result = String.format("Basic " + finalCode);
+
         return result;
     }
 

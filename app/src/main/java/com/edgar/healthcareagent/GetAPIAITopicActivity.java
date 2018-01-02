@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 
@@ -44,7 +45,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_getapiait);
+        setContentView(R.layout.activity_get_topic);
 
         //AI Chat Bot Setup
         final AIConfiguration config = new AIConfiguration(AI_ACCESS_CODE,
@@ -57,7 +58,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         aiBot = new AiBot(this);
 
         mIntroTextView = findViewById(R.id.intro_text);
-        mSpeechDetectButton = findViewById(R.id.speakButton);
+        mSpeechDetectButton = findViewById(R.id.speak_button);
 
         String intro = "WELCOME TO THE HEALTHCARE AGENT APP \n" +
                 "PLEASE PRESS BUTTON AND MAKE YOUR REQUEST";
@@ -107,10 +108,9 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         tts.speakOut("I'm sorry.  I didn't get that. Please press button" +
                 "again and repeat the topic.");
 
-        String errorString = error.toString();
+        String errorString = error.getMessage();
 
-        Intent intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
-        startActivity(intent);
+        Toast.makeText(this, "Error: " + errorString, Toast.LENGTH_LONG).show();
     }
 
     @Override
