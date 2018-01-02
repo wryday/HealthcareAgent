@@ -1,16 +1,12 @@
 package com.edgar.healthcareagent.searchSymptom;
 
-/**
- * Created by Edgar on 3/27/2017.
- */
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Versioning {
 
     private String xHWVersion;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getXHWVersion() {
         return xHWVersion;
@@ -28,4 +24,11 @@ public class Versioning {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Versioning{" +
+                "xHWVersion='" + xHWVersion + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

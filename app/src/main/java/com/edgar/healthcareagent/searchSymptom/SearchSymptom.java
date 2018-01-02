@@ -1,9 +1,5 @@
 package com.edgar.healthcareagent.searchSymptom;
 
-/**
- * Created by Edgar on 3/27/2017.
- */
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +11,7 @@ public class SearchSymptom {
     private Links links;
     private String schema;
     private List<Item> items = null;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Integer getStatus() {
         return status;
@@ -65,4 +61,15 @@ public class SearchSymptom {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "SearchSymptom{" +
+                "status=" + status +
+                ", versioning=" + versioning +
+                ", links=" + links +
+                ", schema='" + schema + '\'' +
+                ", items=" + items +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
