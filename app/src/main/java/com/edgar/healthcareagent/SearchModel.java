@@ -22,8 +22,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIchoice;
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIrequest;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiChoice;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiRequest;
 import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
 
 public class SearchModel extends AppCompatActivity {
@@ -70,14 +70,14 @@ public class SearchModel extends AppCompatActivity {
 
         }*/
         //Query the symptomstoconditions database to get the related condition(s)
-        List<String> conditionsFromSymptom = myDbHelper.getConditionList(APIAIchoice);
+        List<String> conditionsFromSymptom = myDbHelper.getConditionList(ApiAiChoice);
         //LEAVING conditionsFromSymptom empty for now getConditionList
         // automatically programmed to return empty list.  (See AUTHOR'S NOTE #1)
 
         if (!conditionsFromSymptom.isEmpty()) {
             String conditionListReply = "";
             conditionListReply = "The suggested list of topics based on the " +
-                    "symptom " + APIAIchoice + "is ";
+                    "symptom " + ApiAiChoice + "is ";
             for (int i = 0; i < conditionsFromSymptom.size(); i++) {
                 conditionListReply += conditionsFromSymptom.get(i);
 
@@ -97,7 +97,7 @@ public class SearchModel extends AppCompatActivity {
         /*Otherwise query the Healthwise API*/
         String resultFinal = "";
         String searchUrl = "https://search.healthwise.net/v1/search?q="
-                + APIAIrequest + "&top=5&skip=12&num_concepts=12";
+                + ApiAiRequest + "&top=5&skip=12&num_concepts=12";
 
         OkHttpClient client = new OkHttpClient();
         Request newRequest1 = new Request.Builder()
@@ -120,7 +120,7 @@ public class SearchModel extends AppCompatActivity {
 
             String taxonomyUrl = "";
             String concept = "";
-            String request = APIAIchoice.toLowerCase();
+            String request = ApiAiChoice.toLowerCase();
 
             List<Concept> concepts = searchResult.getConcepts();
 

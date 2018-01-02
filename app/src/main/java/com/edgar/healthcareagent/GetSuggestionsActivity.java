@@ -13,15 +13,12 @@ import org.json.JSONException;
 
 import java.util.Map;
 
-import ai.api.AIConfiguration;
 import ai.api.AIListener;
-import ai.api.AIService;
-import ai.api.model.AIError;
-import ai.api.model.AIResponse;
-import ai.api.model.Result;
+import ai.api.android.AIConfiguration;
+import ai.api.android.AIService;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIrequest;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiRequest;
 
 public class GetSuggestionsActivity extends AppCompatActivity implements AIListener {
 
@@ -67,7 +64,7 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
 
                     //this is what the bot will say after suggestionSearch is done:
                     //"Which one will you choose?"
-                    suggestion_list = suggestionAndResponse.suggestionSearch(token, APIAIrequest);
+                    suggestion_list = suggestionAndResponse.suggestionSearch(token, ApiAiRequest);
 
                     /*this is the response from the bot with user's choice
                     This response will be taken to the search model where
@@ -100,9 +97,9 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
 
         }
 
-        APIAIrequest = result.getResolvedQuery();//this is the condition I've finally chosen
-        //This is APIAIrequest with '+' separating words for the url
-        APIAIchoice = APIAIrequest.replace(' ', '+');
+        ApiAiRequest = result.getResolvedQuery();//this is the condition I've finally chosen
+        //This is ApiAiRequest with '+' separating words for the url
+        APIAIchoice = ApiAiRequest.replace(' ', '+');
 
         if (!replyOk) {
             intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);

@@ -12,107 +12,119 @@ import com.google.gson.JsonElement;
 
 import java.util.Map;
 
-import ai.api.AIConfiguration;
 import ai.api.AIListener;
-import ai.api.AIService;
-import ai.api.model.AIError;
-import ai.api.model.AIResponse;
-import ai.api.model.Result;
+import ai.api.android.AIConfiguration;
+import ai.api.android.AIService;
 
-public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener{
-    private String AIAccessCode = "330c83acba834b0f8d904734f56df684";
-    private Button speakButton;
-    private TextView intro_text;
-    private AIService aiService;
-    private String token = "";
-    public static String APIAIrequest;
-    public static String APIAIchoice;
+public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener {
+    private static final String TAG = GetApiAiTopicActivity.class.getSimpleName();
+
+    private static final String AIAccessCode = "330c83acba834b0f8d904734f56df684";
+
+    public static String ApiAiRequest;
+    public static String ApiAiChoice;
+
     public static String reply = "The suggested list of topics are ";
-    AiBot aiBot;
+
+    private Button mSpeechDetectButton;
+    private TextView mIntroTextView;
+
+    private AIService aiService;
+
+    private String token = "";
+
     private TextToSpeechModel tts;
+
     //TokenRequest tokenRequest = new TokenRequest();
+    AiBot aiBot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getapiait);
+
         //AI Chat Bot Setup
-       final AIConfiguration config = new AIConfiguration(AIAccessCode,
+        final AIConfiguration config = new AIConfiguration(AIAccessCode,
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
+
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
         tts = new TextToSpeechModel(this);
         aiBot = new AiBot(this);
 
-        intro_text = (TextView) findViewById(R.id.intro_text);
-        speakButton = (Button) findViewById(R.id.speakButton);
+        mIntroTextView = findViewById(R.id.intro_text);
+        mSpeechDetectButton = findViewById(R.id.speakButton);
+
         String intro = "WELCOME TO THE HEALTHCARE AGENT APP \n" +
                 "PLEASE PRESS BUTTON AND MAKE YOUR REQUEST";
-        intro_text.setText(intro);
+
+        mIntroTextView.setText(intro);
+
         //resultTextView = (TextView) findViewById(R.id.resultTextView);
         //resultScrollView = (ScrollView) findViewById((R.id.resultScrollView));
-        //String APIAIrequest = aiBot.APIAIrequest;
+        //String ApiAiRequest = aiBot.ApiAiRequest;
     }
+
     public void speakButtonOnClick(final View view) {
         aiService.startListening();
     }
 
-   public void onResult(final AIResponse response) {
+    public void onResult(final AIResponse response) {
+        Log.i(TAG, "onResult");
+
         Result result = response.getResult();
-       Log.d("HEALTHCARE", "have result");
+
         // Get parameters
         String parameterString = "";
+
         if (result.getParameters() != null && !result.getParameters().isEmpty()) {
             for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
                 parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
             }
+        } else {
+            Log.e(TAG, "result parameters were null or empty");
         }
-       else{
 
-        }
         // Show results in TextView for debugging.
-       //resultTextView.setMovementMethod(new ScrollingMovementMethod());
+        //resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
-       APIAIchoice = result.getFulfillment().getSpeech();
-       APIAIrequest = APIAIchoice.replace(' ', '+');//adds '+' for REST query
+        ApiAiChoice = result.getFulfillment().getSpeech();
+        ApiAiRequest = ApiAiChoice.replace(' ', '+');//adds '+' for REST query
 
-       Intent i = new Intent(getBaseContext(), SearchActivity.class);
-       startActivity(i);
-   }
-
-    @Override
-    public void onError(final AIError error) {
-        Log.d("HEALTHCARE", "Didn't detect speech");
-        tts.speakOut("I'm sorry.  I didn't get that. Please press button" +
-                "again and repeat the topic.");
-        Intent i = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
-        startActivity(i);
-        String err = error.toString();
+        Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+        startActivity(intent);
     }
 
     @Override
-    public void onListeningStarted(){
+    public void onError(final AIError error) {
+        Log.d(TAG, "Error detecting speech");
 
-        Log.d("HEALTHCARE", "listening started!");
+        tts.speakOut("I'm sorry.  I didn't get that. Please press button" +
+                "again and repeat the topic.");
 
+        String errorString = error.toString();
+
+        Intent intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onListeningStarted() {
+        Log.d(TAG, "listening started!");
     }
 
     @Override
     public void onListeningCanceled() {
-        Log.d("HEALTHCARE", "listening cancelled!");
+        Log.d(TAG, "listening cancelled!");
     }
 
     @Override
     public void onListeningFinished() {
-        Log.d("HEALTHCARE", "listening finished");
-
+        Log.d(TAG, "listening finished");
     }
 
     @Override
     public void onAudioLevel(final float level) {
     }
-
-
-
 }

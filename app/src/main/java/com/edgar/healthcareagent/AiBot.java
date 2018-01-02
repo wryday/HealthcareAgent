@@ -6,12 +6,9 @@ import com.google.gson.JsonElement;
 
 import java.util.Map;
 
-import ai.api.AIConfiguration;
 import ai.api.AIListener;
-import ai.api.AIService;
-import ai.api.model.AIError;
-import ai.api.model.AIResponse;
-import ai.api.model.Result;
+import ai.api.android.AIConfiguration;
+import ai.api.android.AIService;
 
 public class AiBot implements AIListener {
     private AIService aiService;

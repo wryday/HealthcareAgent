@@ -13,7 +13,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIchoice;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiChoice;
 
 public class SearchSymptomsActivity extends AppCompatActivity {
 
@@ -53,12 +53,12 @@ public class SearchSymptomsActivity extends AppCompatActivity {
         }
 
         //Query the symptomstoconditions database to get the related condition(s)
-        List<String> conditionsFromSymptom = myDbHelper.getConditionList(APIAIchoice);
+        List<String> conditionsFromSymptom = myDbHelper.getConditionList(ApiAiChoice);
         String conditionListReply = "";
 
         if (!conditionsFromSymptom.isEmpty()) {
             conditionListReply = "The suggested list of topics based on the " +
-                    "symptom " + APIAIchoice + "is ";
+                    "symptom " + ApiAiChoice + "is ";
 
             for (int i = 0; i < conditionsFromSymptom.size(); i++) {
                 conditionListReply += conditionsFromSymptom.get(i) + ", ";

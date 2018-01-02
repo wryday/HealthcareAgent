@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import ai.api.AIListener;
-import ai.api.model.AIError;
-import ai.api.model.AIResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -133,10 +131,10 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
     public String getSearchTopic(ApiInterface apiService, String APIAIchoice) {
         Log.d(TAG, "Entering getSearchTopic");
-//        APIAIchoice = result.getFulfillment().getSpeech();
-//        APIAIrequest = APIAIchoice.replace(' ', '+');/
+//        ApiAiChoice = result.getFulfillment().getSpeech();
+//        ApiAiRequest = ApiAiChoice.replace(' ', '+');/
 //        String searchUrl = "https://search.healthwise.net/v1/search?q="
-//                        + APIAIrequest + "&top=5&skip=12&num_concepts=12";
+//                        + ApiAiRequest + "&top=5&skip=12&num_concepts=12";
 
         Map<String, String> searchData = new HashMap<>();
         searchData.put("num_concepts", String.valueOf(12));
