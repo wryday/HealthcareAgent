@@ -8,7 +8,7 @@ public class Aspect {
 
     private String id;
     private String label;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getId() {
         return id;
@@ -34,4 +34,12 @@ public class Aspect {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Aspect{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

@@ -10,7 +10,7 @@ public class SymptomSearchObject {
     private Links links;
     private String schema;
     private Data data;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Integer getStatus() {
         return status;
@@ -60,4 +60,15 @@ public class SymptomSearchObject {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "SymptomSearchObject{" +
+                "status=" + status +
+                ", versioning=" + versioning +
+                ", links=" + links +
+                ", schema='" + schema + '\'' +
+                ", data=" + data +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

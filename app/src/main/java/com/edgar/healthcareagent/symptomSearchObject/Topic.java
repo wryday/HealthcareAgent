@@ -20,7 +20,7 @@ public class Topic {
     private List<Taxonomy> taxonomy = null;
     private String aspect;
     private String detailLevel;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getId() {
         return id;
@@ -142,4 +142,24 @@ public class Topic {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id='" + id + '\'' +
+                ", version='" + version + '\'' +
+                ", hash='" + hash + '\'' +
+                ", certifiedDate='" + certifiedDate + '\'' +
+                ", lang='" + lang + '\'' +
+                ", type='" + type + '\'' +
+                ", title=" + title +
+                ", legal=" + legal +
+                ", navigable=" + navigable +
+                ", credits=" + credits +
+                ", html='" + html + '\'' +
+                ", taxonomy=" + taxonomy +
+                ", aspect='" + aspect + '\'' +
+                ", detailLevel='" + detailLevel + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

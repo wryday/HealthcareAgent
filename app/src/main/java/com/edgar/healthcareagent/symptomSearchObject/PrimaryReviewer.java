@@ -6,7 +6,7 @@ import java.util.Map;
 public class PrimaryReviewer {
 
     private String name;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getName() {
         return name;
@@ -24,4 +24,11 @@ public class PrimaryReviewer {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "PrimaryReviewer{" +
+                "name='" + name + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

@@ -7,7 +7,7 @@ public class Taxonomy {
 
     private Aspect aspect;
     private Concept concept;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Aspect getAspect() {
         return aspect;
@@ -33,4 +33,12 @@ public class Taxonomy {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Taxonomy{" +
+                "aspect=" + aspect +
+                ", concept=" + concept +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

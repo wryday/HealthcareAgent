@@ -6,7 +6,7 @@ import java.util.Map;
 public class Title {
 
     private String consumer;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getConsumer() {
         return consumer;
@@ -24,4 +24,11 @@ public class Title {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Title{" +
+                "consumer='" + consumer + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

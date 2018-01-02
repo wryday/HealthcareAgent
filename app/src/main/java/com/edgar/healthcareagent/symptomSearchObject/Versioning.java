@@ -6,7 +6,7 @@ import java.util.Map;
 public class Versioning {
 
     private String xHWVersion;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getXHWVersion() {
         return xHWVersion;
@@ -24,4 +24,11 @@ public class Versioning {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Versioning{" +
+                "xHWVersion='" + xHWVersion + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

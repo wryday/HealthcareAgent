@@ -14,7 +14,7 @@ public class Legal {
     private String toLearnMoreHtml;
     private String yourUseOfThisInformationHtml;
     private String html;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getLogoUrl() {
         return logoUrl;
@@ -96,4 +96,19 @@ public class Legal {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Legal{" +
+                "logoUrl='" + logoUrl + '\'' +
+                ", copyrightText='" + copyrightText + '\'' +
+                ", disclaimerText='" + disclaimerText + '\'' +
+                ", termsOfUseUrl='" + termsOfUseUrl + '\'' +
+                ", privacyPolicyUrl='" + privacyPolicyUrl + '\'' +
+                ", moreInformationUrl='" + moreInformationUrl + '\'' +
+                ", toLearnMoreHtml='" + toLearnMoreHtml + '\'' +
+                ", yourUseOfThisInformationHtml='" + yourUseOfThisInformationHtml + '\'' +
+                ", html='" + html + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

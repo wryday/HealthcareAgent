@@ -8,7 +8,7 @@ public class Concept {
 
     private String id;
     private String label;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getId() {
         return id;
@@ -34,4 +34,12 @@ public class Concept {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Concept{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

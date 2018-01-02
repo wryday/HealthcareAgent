@@ -6,7 +6,7 @@ import java.util.Map;
 public class Author {
 
     private String name;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getName() {
         return name;
@@ -24,4 +24,11 @@ public class Author {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

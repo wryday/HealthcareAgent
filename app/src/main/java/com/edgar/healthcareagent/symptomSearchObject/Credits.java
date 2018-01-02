@@ -9,7 +9,7 @@ public class Credits {
     private Author author;
     private List<PrimaryReviewer> primaryReviewers = null;
     private List<SecondaryReviewer> secondaryReviewers = null;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Author getAuthor() {
         return author;
@@ -43,4 +43,13 @@ public class Credits {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Credits{" +
+                "author=" + author +
+                ", primaryReviewers=" + primaryReviewers +
+                ", secondaryReviewers=" + secondaryReviewers +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

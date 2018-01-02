@@ -8,7 +8,7 @@ public class Links {
     private String self;
     private Localizations localizations;
     private Metadata metadata;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getSelf() {
         return self;
@@ -42,4 +42,13 @@ public class Links {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Links{" +
+                "self='" + self + '\'' +
+                ", localizations=" + localizations +
+                ", metadata=" + metadata +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

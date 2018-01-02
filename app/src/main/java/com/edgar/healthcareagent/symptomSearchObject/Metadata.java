@@ -6,7 +6,7 @@ import java.util.Map;
 public class Metadata {
 
     private String enUs;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getEnUs() {
         return enUs;
@@ -24,4 +24,11 @@ public class Metadata {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Metadata{" +
+                "enUs='" + enUs + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
