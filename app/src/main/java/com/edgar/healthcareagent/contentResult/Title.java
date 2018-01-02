@@ -6,22 +6,12 @@ import java.util.Map;
 public class Title {
 
     private String consumer;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The consumer
-     */
     public String getConsumer() {
         return consumer;
     }
 
-    /**
-     *
-     * @param consumer
-     * The consumer
-     */
     public void setConsumer(String consumer) {
         this.consumer = consumer;
     }
@@ -34,4 +24,11 @@ public class Title {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Title{" +
+                "consumer='" + consumer + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

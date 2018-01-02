@@ -6,22 +6,12 @@ import java.util.Map;
 public class Localizations {
 
     private String enUs;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The enUs
-     */
     public String getEnUs() {
         return enUs;
     }
 
-    /**
-     *
-     * @param enUs
-     * The en-us
-     */
     public void setEnUs(String enUs) {
         this.enUs = enUs;
     }
@@ -34,4 +24,11 @@ public class Localizations {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Localizations{" +
+                "enUs='" + enUs + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

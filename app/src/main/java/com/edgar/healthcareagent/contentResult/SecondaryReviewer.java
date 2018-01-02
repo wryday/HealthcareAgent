@@ -6,22 +6,12 @@ import java.util.Map;
 public class SecondaryReviewer {
 
     private String name;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     *
-     * @param name
-     * The name
-     */
     public void setName(String name) {
         this.name = name;
     }
@@ -34,4 +24,11 @@ public class SecondaryReviewer {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "SecondaryReviewer{" +
+                "name='" + name + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

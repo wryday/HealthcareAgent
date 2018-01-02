@@ -9,76 +9,36 @@ public class ContentResult {
     private Links links;
     private String schema;
     private Data data;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The status
-     */
     public Integer getStatus() {
         return status;
     }
 
-    /**
-     *
-     * @param status
-     * The status
-     */
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    /**
-     *
-     * @return
-     * The links
-     */
     public Links getLinks() {
         return links;
     }
 
-    /**
-     *
-     * @param links
-     * The links
-     */
     public void setLinks(Links links) {
         this.links = links;
     }
 
-    /**
-     *
-     * @return
-     * The schema
-     */
     public String getSchema() {
         return schema;
     }
 
-    /**
-     *
-     * @param schema
-     * The schema
-     */
     public void setSchema(String schema) {
         this.schema = schema;
     }
 
-    /**
-     *
-     * @return
-     * The data
-     */
     public Data getData() {
         return data;
     }
 
-    /**
-     *
-     * @param data
-     * The data
-     */
     public void setData(Data data) {
         this.data = data;
     }
@@ -91,4 +51,14 @@ public class ContentResult {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "ContentResult{" +
+                "status=" + status +
+                ", links=" + links +
+                ", schema='" + schema + '\'' +
+                ", data=" + data +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

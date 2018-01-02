@@ -9,58 +9,28 @@ public class Credits {
     private Author author;
     private List<PrimaryReviewer> primaryReviewers = null;
     private List<SecondaryReviewer> secondaryReviewers = null;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The author
-     */
     public Author getAuthor() {
         return author;
     }
 
-    /**
-     *
-     * @param author
-     * The author
-     */
     public void setAuthor(Author author) {
         this.author = author;
     }
 
-    /**
-     *
-     * @return
-     * The primaryReviewers
-     */
     public List<PrimaryReviewer> getPrimaryReviewers() {
         return primaryReviewers;
     }
 
-    /**
-     *
-     * @param primaryReviewers
-     * The primaryReviewers
-     */
     public void setPrimaryReviewers(List<PrimaryReviewer> primaryReviewers) {
         this.primaryReviewers = primaryReviewers;
     }
 
-    /**
-     *
-     * @return
-     * The secondaryReviewers
-     */
     public List<SecondaryReviewer> getSecondaryReviewers() {
         return secondaryReviewers;
     }
 
-    /**
-     *
-     * @param secondaryReviewers
-     * The secondaryReviewers
-     */
     public void setSecondaryReviewers(List<SecondaryReviewer> secondaryReviewers) {
         this.secondaryReviewers = secondaryReviewers;
     }
@@ -73,4 +43,13 @@ public class Credits {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Credits{" +
+                "author=" + author +
+                ", primaryReviewers=" + primaryReviewers +
+                ", secondaryReviewers=" + secondaryReviewers +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

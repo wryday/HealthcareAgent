@@ -7,22 +7,12 @@ import java.util.Map;
 public class Data {
 
     private List<Topic> topics = null;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @return
-     * The topics
-     */
     public List<Topic> getTopics() {
         return topics;
     }
 
-    /**
-     *
-     * @param topics
-     * The topics
-     */
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
@@ -35,4 +25,11 @@ public class Data {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Data{" +
+                "topics=" + topics +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
