@@ -1,4 +1,4 @@
-package com.example.edgar.healthcareagent;
+package com.edgar.healthcareagent;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.edgar.healthcareagent", appContext.getPackageName());
+        assertEquals("com.edgar.healthcareagent", appContext.getPackageName());
     }
 }

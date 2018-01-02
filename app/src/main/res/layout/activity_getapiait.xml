@@ -7,26 +7,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.edgar.healthcareagent.GetAPIAITopicActivity">
+    tools:context="com.edgar.healthcareagent.GetAPIAITopicActivity">
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/intro_text"
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:id="@+id/intro_text"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="TextView" />
 
     <Button
-        android:text="PRESS TO SPEAK"
+        android:id="@+id/speakButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/speakButton"
-        android:onClick="speakButtonOnClick"
         android:layout_below="@+id/intro_text"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:onClick="speakButtonOnClick"
+        android:text="PRESS TO SPEAK" />
 
 </RelativeLayout>

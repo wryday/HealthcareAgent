@@ -1,4 +1,4 @@
-package com.example.edgar.healthcareagent;
+package com.edgar.healthcareagent;
 
 import org.junit.Test;
 
