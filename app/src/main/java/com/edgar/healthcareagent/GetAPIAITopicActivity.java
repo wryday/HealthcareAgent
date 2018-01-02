@@ -15,11 +15,14 @@ import java.util.Map;
 import ai.api.AIListener;
 import ai.api.android.AIConfiguration;
 import ai.api.android.AIService;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
+import ai.api.model.Result;
 
 public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = GetApiAiTopicActivity.class.getSimpleName();
 
-    private static final String AIAccessCode = "330c83acba834b0f8d904734f56df684";
+    private static final String AI_ACCESS_CODE = "330c83acba834b0f8d904734f56df684";
 
     public static String ApiAiRequest;
     public static String ApiAiChoice;
@@ -44,7 +47,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         setContentView(R.layout.activity_getapiait);
 
         //AI Chat Bot Setup
-        final AIConfiguration config = new AIConfiguration(AIAccessCode,
+        final AIConfiguration config = new AIConfiguration(AI_ACCESS_CODE,
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
 
@@ -70,16 +73,17 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         aiService.startListening();
     }
 
-    public void onResult(final AIResponse response) {
+    @Override
+    public void onResult(AIResponse result) {
         Log.i(TAG, "onResult");
 
-        Result result = response.getResult();
+        Result responseResult = result.getResult();
 
         // Get parameters
         String parameterString = "";
 
-        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
-            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+        if (responseResult.getParameters() != null && !responseResult.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : responseResult.getParameters().entrySet()) {
                 parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
             }
         } else {
@@ -89,7 +93,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         // Show results in TextView for debugging.
         //resultTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        ApiAiChoice = result.getFulfillment().getSpeech();
+        ApiAiChoice = responseResult.getFulfillment().getSpeech();
         ApiAiRequest = ApiAiChoice.replace(' ', '+');//adds '+' for REST query
 
         Intent intent = new Intent(getBaseContext(), SearchActivity.class);
@@ -97,7 +101,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
     }
 
     @Override
-    public void onError(final AIError error) {
+    public void onError(AIError error) {
         Log.d(TAG, "Error detecting speech");
 
         tts.speakOut("I'm sorry.  I didn't get that. Please press button" +

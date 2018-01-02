@@ -9,6 +9,9 @@ import java.util.Map;
 import ai.api.AIListener;
 import ai.api.android.AIConfiguration;
 import ai.api.android.AIService;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
+import ai.api.model.Result;
 
 public class AiBot implements AIListener {
     private AIService aiService;

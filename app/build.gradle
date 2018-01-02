@@ -41,6 +41,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     compile 'ai.api:sdk:2.0.7@aar'
+    compile 'ai.api:libai:1.6.12'
 
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.google.code.gson:gson:2.8.2'

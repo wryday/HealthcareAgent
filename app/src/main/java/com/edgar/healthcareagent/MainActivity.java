@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import ai.api.AIListener;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -243,12 +245,12 @@ public class MainActivity extends AppCompatActivity implements AIListener {
     }
 
     @Override
-    public void onResult(AIResponse result) {
+    public void onError(AIError error) {
 
     }
 
     @Override
-    public void onError(AIError error) {
+    public void onResult(AIResponse result) {
 
     }
 

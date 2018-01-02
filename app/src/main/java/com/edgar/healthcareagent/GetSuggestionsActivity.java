@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,11 +17,15 @@ import java.util.Map;
 import ai.api.AIListener;
 import ai.api.android.AIConfiguration;
 import ai.api.android.AIService;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
+import ai.api.model.Result;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiRequest;
 
 public class GetSuggestionsActivity extends AppCompatActivity implements AIListener {
+    private static final String TAG = GetSuggestionsActivity.class.getSimpleName();
 
     public static String token;
     public static String request;
@@ -82,22 +87,23 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
         }).start();
     }
 
-    //Right here is where I've pressed the button again and made my choice
-    public void onResult(final AIResponse response2) {
-        Result result = response2.getResult();
+    @Override
+    public void onResult(AIResponse result) {
+        //Right here is where I've pressed the button again and made my choice
+        Result responseResult = result.getResult();
 
         // Get my choice back to send to the search activity
         String parameterString = "";
 
-        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
-            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+        if (responseResult.getParameters() != null && !responseResult.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : responseResult.getParameters().entrySet()) {
                 parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
             }
         } else {
-
+            Log.e(TAG, "result parameters were null or empty");
         }
 
-        ApiAiRequest = result.getResolvedQuery();//this is the condition I've finally chosen
+        ApiAiRequest = responseResult.getResolvedQuery();//this is the condition I've finally chosen
         //This is ApiAiRequest with '+' separating words for the url
         APIAIchoice = ApiAiRequest.replace(' ', '+');
 
@@ -110,15 +116,15 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
         }
     }
 
-    public void speakButtonOnClick2(final View view) {
-        aiService.startListening();
-    }
-
     @Override
     public void onError(AIError error) {
         tts.speakOut("I'm sorry I didn't get that. " +
                 " Please press button and repeat your choice of topic");
         intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+    }
+
+    public void speakButtonOnClick2(final View view) {
+        aiService.startListening();
     }
 
     @Override
