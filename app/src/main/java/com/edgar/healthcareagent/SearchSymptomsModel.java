@@ -10,22 +10,18 @@ import java.util.List;
 
 import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
 
-/**
- * Created by Edgar on 11/20/2016.
- */
-
-public class SearchSymptomsModel extends AppCompatActivity  {
+public class SearchSymptomsModel extends AppCompatActivity {
 
     private String request;
     private String concept;
     private Context context;
     String choice = reply; //import reply from suggestions search
-    SearchSymptomsModel() throws JSONException {}
     public List<String> conditionsThatMatchSymptoms = new ArrayList<>();
+
+    SearchSymptomsModel() throws JSONException {
+    }
 
     public List<String> getConditionList(String token, String symptom) throws JSONException {
         return null;
     }
-
 }
-

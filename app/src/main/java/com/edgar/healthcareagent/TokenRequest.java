@@ -1,9 +1,5 @@
 package com.edgar.healthcareagent;
 
-/**
- * Created by Edgar on 11/15/2016.
- */
-
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -19,21 +15,26 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
-public class TokenRequest{
+public class TokenRequest {
+    private static final String TAG = TokenRequest.class.getSimpleName();
 
     public static String authToken;
+
     private String ClientId = "4488c302a1be4a6ca430b63661843c43";
     private String ClientSecret = "qOGnt7wlB0eQo0pbaEcoXw==";
 
     public String getToken() {
         OkHttpClient client = new OkHttpClient();
+
         String authCode = getEncodedAuthCode();
         String url = "https://auth.healthwise.net/v1/oauth2/token";
 
         String body = "{{'grant_type' : 'client_credentials', 'scope' : '*', 'expires_in' : '3600'}}";
-        Log.d("OKHTTP3", "Client created");
+
+        Log.d(TAG, "Client created");
+
         JSONObject jsonObject = new JSONObject();
+
         try {
             jsonObject.put("grant_type", "client_credentials");
             jsonObject.put("scope", "content.api search.api taxonomy.api");
@@ -53,7 +54,7 @@ public class TokenRequest{
                 .post(jsonBody)
                 .build();
 
-        try{
+        try {
             Response response = client.newCall(newRequest).execute();
             String jsonData = response.body().string();
             JSONObject jobject = new JSONObject(jsonData);
@@ -69,13 +70,12 @@ public class TokenRequest{
     }
 
     private void sendDataToServer(Request newRequest, OkHttpClient client) {
-
         new AsyncTask<Void, Void, String>() {
-
             @Override
             protected String doInBackground(Void... voids) {
                 String jsonData = null;
                 JSONObject jobject = null;
+
                 try {
                     Response response = client.newCall(newRequest).execute();
                     jsonData = response.body().string();
@@ -89,13 +89,14 @@ public class TokenRequest{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
                 return "couldn't get the server";
                 //return getServerResponse(newRequest, client);
             }
 
-           @Override
+            @Override
             protected void onPostExecute(String result) {
-               MainActivity.token = result;
+                MainActivity.token = result;
                /*try {
                    token = get();
                } catch (InterruptedException e) {
@@ -103,7 +104,7 @@ public class TokenRequest{
                } catch (ExecutionException e) {
                    e.printStackTrace();
                }*/
-           }
+            }
         }.execute();
     }
 
@@ -129,11 +130,14 @@ public class TokenRequest{
     private String getEncodedAuthCode() {
         String code = ClientId + ":" + ClientSecret;
         String result;
-        Log.v("OKHTTP3", "Encoding: " + code);
+
+        Log.v(TAG, "Encoding: " + code);
+
         byte[] code2 = code.getBytes();
+
         String finalCode = Base64.encodeToString(code2, Base64.URL_SAFE | Base64.NO_WRAP);
         result = String.format("Basic " + finalCode);
+
         return result;
     }
-
 }

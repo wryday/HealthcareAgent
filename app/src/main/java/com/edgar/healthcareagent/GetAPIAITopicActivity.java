@@ -19,7 +19,7 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
-public class GetAPIAITopicActivity extends AppCompatActivity implements AIListener{
+public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener{
     private String AIAccessCode = "330c83acba834b0f8d904734f56df684";
     private Button speakButton;
     private TextView intro_text;
@@ -28,7 +28,7 @@ public class GetAPIAITopicActivity extends AppCompatActivity implements AIListen
     public static String APIAIrequest;
     public static String APIAIchoice;
     public static String reply = "The suggested list of topics are ";
-    AIBot aiBot;
+    AiBot aiBot;
     private TextToSpeechModel tts;
     //TokenRequest tokenRequest = new TokenRequest();
 
@@ -43,7 +43,7 @@ public class GetAPIAITopicActivity extends AppCompatActivity implements AIListen
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
         tts = new TextToSpeechModel(this);
-        aiBot = new AIBot(this);
+        aiBot = new AiBot(this);
 
         intro_text = (TextView) findViewById(R.id.intro_text);
         speakButton = (Button) findViewById(R.id.speakButton);
@@ -86,7 +86,7 @@ public class GetAPIAITopicActivity extends AppCompatActivity implements AIListen
         Log.d("HEALTHCARE", "Didn't detect speech");
         tts.speakOut("I'm sorry.  I didn't get that. Please press button" +
                 "again and repeat the topic.");
-        Intent i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
+        Intent i = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
         startActivity(i);
         String err = error.toString();
     }

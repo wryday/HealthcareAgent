@@ -1,7 +1,9 @@
 package com.edgar.healthcareagent;
 
 import android.content.Context;
+
 import com.google.gson.JsonElement;
+
 import java.util.Map;
 
 import ai.api.AIConfiguration;
@@ -11,13 +13,13 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
-public class AIBot implements AIListener {
+public class AiBot implements AIListener {
     private AIService aiService;
     private Context context = null;
     final AIConfiguration config;
     String APIAIrequest;
 
-    public AIBot(Context context){
+    public AiBot(Context context) {
         config = new AIConfiguration("330c83acba834b0f8d904734f56df684",
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
@@ -25,7 +27,8 @@ public class AIBot implements AIListener {
         aiService = AIService.getService(context, config);
         aiService.setListener(this);
     }
-    public AIService getAiService(){
+
+    public AIService getAiService() {
         return aiService;
     }
 
@@ -74,7 +77,4 @@ public class AIBot implements AIListener {
     public void onListeningFinished() {
 
     }
-
-
 }
-

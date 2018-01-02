@@ -9,22 +9,29 @@ import android.view.View;
 import android.widget.Button;
 
 import org.json.JSONException;
+
 public class SearchActivity extends AppCompatActivity {
+
+    String id;
+
     private String authToken;
     private Button speakButton3;
+
     SearchModel searchModel = new SearchModel();
 
     public SearchActivity() throws JSONException {
     }
-    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        speakButton3 = (Button) findViewById(R.id.speakButton3);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        speakButton3 = findViewById(R.id.speakButton3);
+
         final TextToSpeechModel tts = new TextToSpeechModel(this);
-        final DataBaseHelper myDbHelper = new DataBaseHelper(this);
+        final DatabaseHelper myDbHelper = new DatabaseHelper(this);
+
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -42,18 +49,18 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(proceedWithSymptomSearch);
                     }*/
 
-                        tts.speakOut(finalReply);
-                }
-                catch (JSONException e){
+                    tts.speakOut(finalReply);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-        Intent i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
+
+        Intent intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
         //tts.onDestroy();
-        startActivity(i);
+        startActivity(intent);
     }
-    public void speakButtonOnClick3(final View view) {}
 
+    public void speakButtonOnClick3(final View view) {
+    }
 }
-

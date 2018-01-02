@@ -21,25 +21,24 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
-import static com.edgar.healthcareagent.GetAPIAITopicActivity.APIAIrequest;
-
-/**
- * Created by Edgar on 11/20/2016.
- */
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIrequest;
 
 public class GetSuggestionsActivity extends AppCompatActivity implements AIListener {
-    private String AIAccessCode = "330c83acba834b0f8d904734f56df684";
-    private Button speakButton2;
-    private AIService aiService;
+
     public static String token;
-    private String suggestion_list;
     public static String request;
     public static String APIAIchoice;
     public static boolean replyOk = true;
+
+    private String AIAccessCode = "330c83acba834b0f8d904734f56df684";
+    private Button speakButton2;
+    private AIService aiService;
+    private String suggestion_list;
     public SuggestionAndResponseModel suggestionAndResponse =
             new SuggestionAndResponseModel(token, this);
-    Intent i;
     private TextToSpeechModel tts;
+
+    Intent intent;
 
     public GetSuggestionsActivity() throws JSONException {
     }
@@ -58,82 +57,86 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
 
         //Get the access token and the suggestions from HW API
         //ASYNCHRONOUSLY!!!
+
         new Thread(new Runnable() {
             @RequiresApi(api = KITKAT)
             @Override
             public void run() {
                 try {
                     token = tokenRequest.getToken();
+
                     //this is what the bot will say after suggestionSearch is done:
                     //"Which one will you choose?"
                     suggestion_list = suggestionAndResponse.suggestionSearch(token, APIAIrequest);
+
                     /*this is the response from the bot with user's choice
                     This response will be taken to the search model where
                     we find the info about the topic through several searches*/
                     tts.speakOut(suggestion_list);
-                    if(!replyOk){
-                        i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
-                        startActivity(i);
+
+                    if (!replyOk) {
+                        intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+                        startActivity(intent);
                     }
-                }
-                catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
     }
+
     //Right here is where I've pressed the button again and made my choice
     public void onResult(final AIResponse response2) {
         Result result = response2.getResult();
 
         // Get my choice back to send to the search activity
         String parameterString = "";
+
         if (result.getParameters() != null && !result.getParameters().isEmpty()) {
             for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
                 parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
             }
-        }
-        else{
+        } else {
 
         }
+
         APIAIrequest = result.getResolvedQuery();//this is the condition I've finally chosen
         //This is APIAIrequest with '+' separating words for the url
         APIAIchoice = APIAIrequest.replace(' ', '+');
-        if(!replyOk){
-            i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
-            startActivity(i);
-        }else{
-            i = new Intent(getBaseContext(), SearchActivity.class);
-            startActivity(i);
-        }
-     }
 
-    public void speakButtonOnClick2(final View view) {aiService.startListening();}
+        if (!replyOk) {
+            intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+            startActivity(intent);
+        } else {
+            intent = new Intent(getBaseContext(), SearchActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void speakButtonOnClick2(final View view) {
+        aiService.startListening();
+    }
 
     @Override
     public void onError(AIError error) {
         tts.speakOut("I'm sorry I didn't get that. " +
                 " Please press button and repeat your choice of topic");
-        i = new Intent(getBaseContext(), GetAPIAITopicActivity.class);
+        intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
     }
 
     @Override
     public void onAudioLevel(float level) {
-
     }
 
     @Override
     public void onListeningStarted() {
-
     }
 
     @Override
     public void onListeningCanceled() {
-
     }
 
     @Override
     public void onListeningFinished() {
-
     }
 }

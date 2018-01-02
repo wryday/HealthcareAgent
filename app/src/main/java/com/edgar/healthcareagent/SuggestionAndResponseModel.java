@@ -19,27 +19,24 @@ import okhttp3.Response;
 
 import static com.edgar.healthcareagent.GetSuggestionsActivity.replyOk;
 
-/**
- * Created by Edgar on 11/20/2016.
- */
+public class SuggestionAndResponseModel extends AppCompatActivity {
+    private static final String TAG = SuggestionAndResponseModel.class.getSimpleName();
 
-public class SuggestionAndResponseModel extends AppCompatActivity  {
+    public static Suggestions suggestions;
+    public static String reply;
 
     private String token;
     private String request;
     private TextToSpeech tts;
+
     private Context context;
-    public static Suggestions suggestions;
 
     SuggestionAndResponseModel(String token, Context context) throws JSONException {
-
         this.token = token;
         this.request = request;
     }
-    public static String reply;
 
     public String suggestionSearch(String token2, String request) throws JSONException {
-
         String url = "https://search.healthwise.net/v1/suggestions?q=" + request +
                 "&fq=types%3A(HWCV_10000+HWCV_10002+HWCV_10003)" +
                 "&content=content%3D(article+topic)&top=2";
@@ -48,40 +45,48 @@ public class SuggestionAndResponseModel extends AppCompatActivity  {
         OkHttpClient client = new OkHttpClient();
         Request newRequest = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization","Bearer " + token2)
+                .addHeader("Authorization", "Bearer " + token2)
                 .build();
-        Log.d("HEALTHCARE", "Request Build successful.");
+
+        Log.d(TAG, "Request Build successful");
 
         try {
             Response response = client.newCall(newRequest).execute();
+
             final Gson gson = new Gson();
+
             suggestions = gson.fromJson(response.body().charStream(), Suggestions.class);
+
             response.close();
+
             List labels = suggestions.getItems();
 
-            if(!labels.isEmpty()) {
+            if (!labels.isEmpty()) {
                 String item = "";
                 reply = "The suggested list of topics are ";
+
                 for (int i = 0; i < labels.size(); i++) {
                     item = suggestions.getItems().get(i).getLabel();
                     reply = reply + item;
+
                     if (i < labels.size() - 1) {
                         reply += " and ";
                     }
                 }
+
                 reply += "Please press the button and make your choice?";
                 replyOk = true;
-            }
-            else{
+            } else {
                 reply = "I'm sorry. Information on this topic is not available." +
                         "Please press the button and choose another topic";
                 replyOk = false;
             }
-            Log.d("OKHTTP3", "Got the response");
+
+            Log.d(TAG, "Got the response");
         } catch (IOException e) {
-            Log.d("OKHTTP3", "Exception while doing request");
-            e.printStackTrace();
+            Log.e(TAG, "Exception while doing request", e);
         }
+
         return reply;
     }
 }

@@ -22,28 +22,27 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.edgar.healthcareagent.GetAPIAITopicActivity.APIAIchoice;
-import static com.edgar.healthcareagent.GetAPIAITopicActivity.APIAIrequest;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIchoice;
+import static com.edgar.healthcareagent.GetApiAiTopicActivity.APIAIrequest;
 import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
 
-/**
- * Created by Edgar on 11/20/2016.
- */
-
-public class SearchModel extends AppCompatActivity  {
+public class SearchModel extends AppCompatActivity {
 
     private String request;
     private String concept;
     private Context context;
+
     String choice = reply; //import reply from suggestions search
-    SearchModel() throws JSONException {}
+
+    SearchModel() throws JSONException {
+    }
 
     /*getFinalReply first queries the condition to symptom database to see if
-    * user's choice is a symptom.  If so it returns a list of conditions
-    * associated with the symptoms.  Otherwise it queries the
-    * Healthwise API and looks for it as a condition.*/
+     * user's choice is a symptom.  If so it returns a list of conditions
+     * associated with the symptoms.  Otherwise it queries the
+     * Healthwise API and looks for it as a condition.*/
 
-    public String getReply(String token, DataBaseHelper myDbHelper) throws JSONException {
+    public String getReply(String token, DatabaseHelper myDbHelper) throws JSONException {
         //First query the database to see if choice is a symptom
         //If so send back the list.  Otherwise query the api.
         /*MAKE THIS A SEPARATE METHOD LATER*/
@@ -57,13 +56,13 @@ public class SearchModel extends AppCompatActivity  {
             2. NEED A SWITCH (STATIC VARIABLE) TO MAKE SURE SEARCH CONTINUES
                 OR AN INFININITE QUERY LOOP HAPPENS
         try{
-            myDbHelper.createDataBase();
+            myDbHelper.createDatabase();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
         try {
 
-            myDbHelper.openDataBase();
+            myDbHelper.openDatabase();
 
         } catch (SQLException sqle) {
 
@@ -81,16 +80,20 @@ public class SearchModel extends AppCompatActivity  {
                     "symptom " + APIAIchoice + "is ";
             for (int i = 0; i < conditionsFromSymptom.size(); i++) {
                 conditionListReply += conditionsFromSymptom.get(i);
-                if(i < conditionsFromSymptom.size() - 1){
+
+                if (i < conditionsFromSymptom.size() - 1) {
                     conditionListReply += ", ";
                 }
+
                 if (i == conditionsFromSymptom.size() - 2) {
                     conditionListReply += " and ";
                 }
             }
+
             conditionListReply += ". Please choose from the list of topics.";
             return conditionListReply;
         }
+
         /*Otherwise query the Healthwise API*/
         String resultFinal = "";
         String searchUrl = "https://search.healthwise.net/v1/search?q="
@@ -101,30 +104,40 @@ public class SearchModel extends AppCompatActivity  {
                 .url(searchUrl)
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
+
         String req = newRequest1.toString();
         Log.d("OKHTTP3", "Request Build successful.");
         String finalReply = "I'm sorry.  Data on this topic is not available" +
                 "Please choose another topic";
-        try {//First search for the Taxonomy url
+
+        //First search for the Taxonomy url
+        try {
             Response response = client.newCall(newRequest1).execute();
+
             final Gson gson = new Gson();
+
             SearchResult searchResult = gson.fromJson(response.body().charStream(), SearchResult.class);
+
             String taxonomyUrl = "";
             String concept = "";
             String request = APIAIchoice.toLowerCase();
+
             List<Concept> concepts = searchResult.getConcepts();
-            for(int i = 0; i < concepts.size(); i++) {
+
+            for (int i = 0; i < concepts.size(); i++) {
                 concept = concepts.get(i).getLabel().toLowerCase();
                 if (concept.equals(request)) {
                     taxonomyUrl = concepts.get(i).getHref();
                     Log.d("HEALTHCARE", "Got the Taxonomy url");
                     break;
-                }else{
+                } else {
                     return finalReply;
                 }
             }
+
             //Second search for the Taxonomy url
             TaxonomyResult taxonomyResult = null;
+
             if (!taxonomyUrl.isEmpty()) {
                 Response response2;
                 Request newRequest2 = new Request.Builder()
@@ -138,12 +151,14 @@ public class SearchModel extends AppCompatActivity  {
             } else {
                 return finalReply;
             }
+
             //Third search for Content url:
             List<TopicAspect> aspects = taxonomyResult.getData().getContent().getTopicAspects();
             List<Topic> topics = null;
             String contentUrl = "";
             String contentId = "";
             String title = "";
+
             for (int i = 0; i < aspects.size(); i++) {
                 if (aspects.get(i).getId().equals("whatIs")) {
                     topics = aspects.get(i).getTopics();
@@ -151,11 +166,13 @@ public class SearchModel extends AppCompatActivity  {
                     break;
                 }
             }
+
             String requestToCompare = "what is " + request + "?";
-            if (topics!=null) {
+
+            if (topics != null) {
                 //make everything lowercase to avoid problems
                 for (int i = 0; i < topics.size(); i++) {
-                   //title = topics.get(i).getTitle().toLowerCase();
+                    //title = topics.get(i).getTitle().toLowerCase();
                     try {
                         if (topics.get(i).getDetailLevel().equals("mainPoint") //||
                                 /*topics.get(i).getDetailLevel().equals("summary")) &&
@@ -164,13 +181,12 @@ public class SearchModel extends AppCompatActivity  {
                             contentUrl = topics.get(i).getHref() + "/en-us";
                             //contentUrl += "/en-us";
                             //contentUrl = "https://content.healthwise.net/v1/topics/" +
-                                    //contentId + "/en-us";
+                            //contentId + "/en-us";
                             Log.d("HEALTHCARE", "Got the content url");
                             break;
                         }
-                    }
-                    //for some reason some of the detail levels are null
-                    catch (NullPointerException e){
+                    } catch (NullPointerException e) {
+                        //for some reason some of the detail levels are null
                         continue;
                     }
                 }
@@ -191,20 +207,22 @@ public class SearchModel extends AppCompatActivity  {
                 contentResponse.close();
                 contentJSON = contentJSON.replaceAll("[\u0000-\u001f]", "");
                 Log.d("HEALTHCARE", "Got the content");
+
                 final Gson gson2 = new Gson();
+
                 contentResult = gson2.fromJson(contentJSON, ContentResult.class);
                 finalReply = contentResult.getData().getTopics().get(0).getHtml();
                 finalReply = Html.fromHtml(finalReply).toString();
                 finalReply += "If you wish, press button to choose another topic.";
+
                 Log.d("OKHTTP3", "Got the response");
-            }
-            else {
+            } else {
                 return finalReply;
             }
         } catch (IOException e) {
-            Log.d("HEALTHCARE", "Exception while doing request");
-            e.printStackTrace();
+            Log.d("HEALTHCARE", "Exception while doing request", e);
         }
+
         return finalReply;
     }
 }
