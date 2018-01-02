@@ -5,7 +5,7 @@ public class Token {
     private String accessToken;
     private String tokenType;
     private Integer expiresIn;
-    
+
     public String getAccessToken() {
         return accessToken;
     }
