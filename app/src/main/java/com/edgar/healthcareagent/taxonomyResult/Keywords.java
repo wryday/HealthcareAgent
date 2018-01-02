@@ -2,6 +2,7 @@ package com.edgar.healthcareagent.taxonomyResult;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -12,56 +13,26 @@ public class Keywords {
     private Fr fr;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The en
-     */
     public En getEn() {
         return en;
     }
 
-    /**
-     *
-     * @param en
-     * The en
-     */
     public void setEn(En en) {
         this.en = en;
     }
 
-    /**
-     *
-     * @return
-     * The es
-     */
     public Es getEs() {
         return es;
     }
 
-    /**
-     *
-     * @param es
-     * The es
-     */
     public void setEs(Es es) {
         this.es = es;
     }
 
-    /**
-     *
-     * @return
-     * The fr
-     */
     public Fr getFr() {
         return fr;
     }
 
-    /**
-     *
-     * @param fr
-     * The fr
-     */
     public void setFr(Fr fr) {
         this.fr = fr;
     }
@@ -74,4 +45,13 @@ public class Keywords {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Keywords{" +
+                "en=" + en +
+                ", es=" + es +
+                ", fr=" + fr +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

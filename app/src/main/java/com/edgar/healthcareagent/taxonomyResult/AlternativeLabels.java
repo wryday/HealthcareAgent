@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -12,20 +13,10 @@ public class AlternativeLabels {
     private List<String> synonyms = new ArrayList<String>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The synonyms
-     */
     public List<String> getSynonyms() {
         return synonyms;
     }
 
-    /**
-     *
-     * @param synonyms
-     * The synonyms
-     */
     public void setSynonyms(List<String> synonyms) {
         this.synonyms = synonyms;
     }
@@ -38,4 +29,11 @@ public class AlternativeLabels {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "AlternativeLabels{" +
+                "synonyms=" + synonyms +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

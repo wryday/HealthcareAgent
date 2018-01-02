@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -13,38 +14,18 @@ public class Taxonomy {
     private List<Parent> parents = new ArrayList<Parent>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The children
-     */
     public List<Child> getChildren() {
         return children;
     }
 
-    /**
-     *
-     * @param children
-     * The children
-     */
     public void setChildren(List<Child> children) {
         this.children = children;
     }
 
-    /**
-     *
-     * @return
-     * The parents
-     */
     public List<Parent> getParents() {
         return parents;
     }
 
-    /**
-     *
-     * @param parents
-     * The parents
-     */
     public void setParents(List<Parent> parents) {
         this.parents = parents;
     }
@@ -57,4 +38,12 @@ public class Taxonomy {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Taxonomy{" +
+                "children=" + children +
+                ", parents=" + parents +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

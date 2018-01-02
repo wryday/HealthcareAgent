@@ -2,6 +2,7 @@ package com.edgar.healthcareagent.taxonomyResult;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -12,56 +13,26 @@ public class Parent {
     private String label;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     * The id
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     * The href
-     */
     public String getHref() {
         return href;
     }
 
-    /**
-     *
-     * @param href
-     * The href
-     */
     public void setHref(String href) {
         this.href = href;
     }
 
-    /**
-     *
-     * @return
-     * The label
-     */
     public String getLabel() {
         return label;
     }
 
-    /**
-     *
-     * @param label
-     * The label
-     */
     public void setLabel(String label) {
         this.label = label;
     }
@@ -74,4 +45,13 @@ public class Parent {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "id='" + id + '\'' +
+                ", href='" + href + '\'' +
+                ", label='" + label + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -14,56 +15,26 @@ public class ArticleAspect {
     private List<Article> articles = new ArrayList<Article>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     * The id
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     * The label
-     */
     public String getLabel() {
         return label;
     }
 
-    /**
-     *
-     * @param label
-     * The label
-     */
     public void setLabel(String label) {
         this.label = label;
     }
 
-    /**
-     *
-     * @return
-     * The articles
-     */
     public List<Article> getArticles() {
         return articles;
     }
 
-    /**
-     *
-     * @param articles
-     * The articles
-     */
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
@@ -76,4 +47,13 @@ public class ArticleAspect {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "ArticleAspect{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", articles=" + articles +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

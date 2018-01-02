@@ -1,4 +1,5 @@
 package com.edgar.healthcareagent.taxonomyResult;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,20 +11,10 @@ public class Links {
     private String self;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     *
-     * @return
-     * The self
-     */
     public String getSelf() {
         return self;
     }
 
-    /**
-     *
-     * @param self
-     * The self
-     */
     public void setSelf(String self) {
         this.self = self;
     }
@@ -36,4 +27,11 @@ public class Links {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Links{" +
+                "self='" + self + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
