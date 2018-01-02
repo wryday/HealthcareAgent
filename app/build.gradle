@@ -57,9 +57,10 @@ dependencies {
 
     compile 'javax.annotation:javax.annotation-api:1.2'
 
+    // Testing-only dependencies
     testCompile 'junit:junit:4.12'
-
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
