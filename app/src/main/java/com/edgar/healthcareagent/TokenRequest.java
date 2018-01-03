@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
+import com.edgar.healthcareagent.ui.MainActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ public class TokenRequest {
         OkHttpClient client = new OkHttpClient();
 
         String authCode = getEncodedAuthCode();
+
         String url = "https://auth.healthwise.net/v1/oauth2/token";
 
         String body = "{{'grant_type' : 'client_credentials', 'scope' : '*', 'expires_in' : '3600'}}";
@@ -60,7 +63,7 @@ public class TokenRequest {
             JSONObject jobject = new JSONObject(jsonData);
             authToken = jobject.getString("access_token");
         } catch (IOException e) {
-            Log.d("OKHTTP3", "Exception while doing request");
+            Log.d(TAG, "Exception while doing request");
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,10 +87,9 @@ public class TokenRequest {
                     final String backGroundAnswer = jobject.getString("access_token");
                     return backGroundAnswer;
                 } catch (IOException e) {
-                    Log.d("OKHTTP3", "Exception while doing request");
-                    e.printStackTrace();
+                    Log.e(TAG, "IOException while doing request", e);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "JSONException while doing request", e);
                 }
 
                 return "couldn't get the server";

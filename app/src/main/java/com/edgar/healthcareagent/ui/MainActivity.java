@@ -1,4 +1,4 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.ui;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 
+import com.edgar.healthcareagent.TokenRequest;
 import com.edgar.healthcareagent.rest.ApiClient;
 import com.edgar.healthcareagent.rest.ApiInterface;
 import com.edgar.healthcareagent.searchResult.Concept;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//import static com.edgar.healthcareagent.GetSuggestionsActivity.replyOk;
+//import static com.edgar.healthcareagent.ui.GetSuggestionsActivity.replyOk;
 
 public class MainActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = MainActivity.class.getSimpleName();

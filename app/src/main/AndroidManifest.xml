@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".GetApiAiTopicActivity">
+        <activity android:name=".ui.GetTopicActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,9 @@
 
         </activity>
 
-        <activity android:name=".GetSuggestionsActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".SearchSymptomsActivity" />
+        <activity android:name=".ui.GetSuggestionsActivity" />
+        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.SearchSymptomsActivity" />
 
     </application>
 

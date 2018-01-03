@@ -1,4 +1,4 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.model;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;

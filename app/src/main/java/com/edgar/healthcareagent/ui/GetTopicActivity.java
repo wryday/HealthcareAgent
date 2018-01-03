@@ -1,4 +1,4 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.edgar.healthcareagent.AiBot;
+import com.edgar.healthcareagent.R;
+import com.edgar.healthcareagent.model.TextToSpeechModel;
 import com.google.gson.JsonElement;
 
 import java.util.Map;
@@ -26,8 +29,8 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
-public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener {
-    private static final String TAG = GetApiAiTopicActivity.class.getSimpleName();
+public class GetTopicActivity extends AppCompatActivity implements AIListener {
+    private static final String TAG = GetTopicActivity.class.getSimpleName();
 
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1414;
     private static final String AI_ACCESS_CODE = "330c83acba834b0f8d904734f56df684";
@@ -66,7 +69,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
             @Override
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(
-                        GetApiAiTopicActivity.this,
+                        GetTopicActivity.this,
                         Manifest.permission.RECORD_AUDIO);
 
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -76,7 +79,6 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
                 }
             }
         });
-
 
         //resultTextView = (TextView) findViewById(R.id.resultTextView);
         //resultScrollView = (ScrollView) findViewById((R.id.resultScrollView));

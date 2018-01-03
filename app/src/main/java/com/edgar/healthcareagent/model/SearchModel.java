@@ -1,10 +1,10 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.model;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 
+import com.edgar.healthcareagent.DatabaseHelper;
 import com.edgar.healthcareagent.contentResult.ContentResult;
 import com.edgar.healthcareagent.searchResult.Concept;
 import com.edgar.healthcareagent.searchResult.SearchResult;
@@ -22,11 +22,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiChoice;
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiRequest;
+import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiChoice;
+import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiRequest;
 import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
 
-public class SearchModel extends AppCompatActivity {
+public class SearchModel {
+    private static final String TAG = SearchModel.class.getSimpleName();
 
     private String request;
     private String concept;
@@ -34,7 +35,7 @@ public class SearchModel extends AppCompatActivity {
 
     String choice = reply; //import reply from suggestions search
 
-    SearchModel() throws JSONException {
+    public SearchModel() throws JSONException {
     }
 
     /*getFinalReply first queries the condition to symptom database to see if
@@ -106,9 +107,8 @@ public class SearchModel extends AppCompatActivity {
                 .build();
 
         String req = newRequest1.toString();
-        Log.d("OKHTTP3", "Request Build successful.");
-        String finalReply = "I'm sorry.  Data on this topic is not available" +
-                "Please choose another topic";
+        Log.d(TAG, "Request Build successful.");
+        String finalReply = "I'm sorry.  Data on this topic is not available. Please choose another topic.";
 
         //First search for the Taxonomy url
         try {
@@ -126,12 +126,11 @@ public class SearchModel extends AppCompatActivity {
 
             for (int i = 0; i < concepts.size(); i++) {
                 concept = concepts.get(i).getLabel().toLowerCase();
+
                 if (concept.equals(request)) {
                     taxonomyUrl = concepts.get(i).getHref();
                     Log.d("HEALTHCARE", "Got the Taxonomy url");
                     break;
-                } else {
-                    return finalReply;
                 }
             }
 
@@ -187,7 +186,7 @@ public class SearchModel extends AppCompatActivity {
                         }
                     } catch (NullPointerException e) {
                         //for some reason some of the detail levels are null
-                        continue;
+                        Log.e(TAG, "NullPointerException in topics loop", e);
                     }
                 }
             } else {
@@ -215,12 +214,12 @@ public class SearchModel extends AppCompatActivity {
                 finalReply = Html.fromHtml(finalReply).toString();
                 finalReply += "If you wish, press button to choose another topic.";
 
-                Log.d("OKHTTP3", "Got the response");
+                Log.d(TAG, "Got the response");
             } else {
                 return finalReply;
             }
         } catch (IOException e) {
-            Log.d("HEALTHCARE", "Exception while doing request", e);
+            Log.d(TAG, "Exception while doing request", e);
         }
 
         return finalReply;

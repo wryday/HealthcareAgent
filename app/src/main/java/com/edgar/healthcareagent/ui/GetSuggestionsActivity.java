@@ -1,4 +1,4 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.edgar.healthcareagent.R;
+import com.edgar.healthcareagent.SuggestionAndResponseModel;
+import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.TokenRequest;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
@@ -22,7 +26,7 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiRequest;
+import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiRequest;
 
 public class GetSuggestionsActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = GetSuggestionsActivity.class.getSimpleName();
@@ -48,7 +52,7 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tts = new TextToSpeechModel(this);
-        setContentView(R.layout.activity_getsuggestions);
+        setContentView(R.layout.activity_get_suggestions);
         final AIConfiguration config = new AIConfiguration(AIAccessCode,
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
@@ -77,7 +81,7 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
                     tts.speakOut(suggestion_list);
 
                     if (!replyOk) {
-                        intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+                        intent = new Intent(getBaseContext(), GetTopicActivity.class);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
@@ -108,7 +112,7 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
         APIAIchoice = ApiAiRequest.replace(' ', '+');
 
         if (!replyOk) {
-            intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+            intent = new Intent(getBaseContext(), GetTopicActivity.class);
             startActivity(intent);
         } else {
             intent = new Intent(getBaseContext(), SearchActivity.class);
@@ -120,7 +124,7 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
     public void onError(AIError error) {
         tts.speakOut("I'm sorry I didn't get that. " +
                 " Please press button and repeat your choice of topic");
-        intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
+        intent = new Intent(getBaseContext(), GetTopicActivity.class);
     }
 
     public void speakButtonOnClick2(final View view) {

@@ -9,17 +9,17 @@
     tools:context="com.edgar.healthcareagent.ui.SearchActivity">
 
     <TextView
-        android:id="@+id/text_search_title"
+        android:id="@+id/text_symptom_search_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="100dp"
-        android:text="Search Activity"
+        android:text="Symptom Search Activity"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button_search"
+        android:id="@+id/button_symptom_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

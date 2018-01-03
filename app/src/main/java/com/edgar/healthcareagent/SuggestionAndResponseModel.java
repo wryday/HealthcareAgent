@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.edgar.healthcareagent.GetSuggestionsActivity.replyOk;
+import static com.edgar.healthcareagent.ui.GetSuggestionsActivity.replyOk;
 
 public class SuggestionAndResponseModel extends AppCompatActivity {
     private static final String TAG = SuggestionAndResponseModel.class.getSimpleName();

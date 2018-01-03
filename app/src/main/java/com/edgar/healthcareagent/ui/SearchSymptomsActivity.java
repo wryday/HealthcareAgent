@@ -1,27 +1,34 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.edgar.healthcareagent.DatabaseHelper;
+import com.edgar.healthcareagent.R;
+import com.edgar.healthcareagent.model.SearchSymptomsModel;
+import com.edgar.healthcareagent.model.TextToSpeechModel;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
 
-import static com.edgar.healthcareagent.GetApiAiTopicActivity.ApiAiChoice;
+import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiChoice;
 
 public class SearchSymptomsActivity extends AppCompatActivity {
+    private static final String TAG = SearchSymptomsActivity.class.getSimpleName();
 
-    String id;
+    private String id;
+    private String authToken;
 
     private Context context;
-    private String authToken;
-    private Button speakButton3;
     private TextToSpeechModel tt1;
 
     SearchSymptomsModel searchSymptomsModel = new SearchSymptomsModel();
@@ -32,9 +39,15 @@ public class SearchSymptomsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_symptom_search);
 
-        speakButton3 = findViewById(R.id.speakButton3);
+        Button symptomSearchButton = findViewById(R.id.button_symptom_search);
+        symptomSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SearchSymptomsActivity.this, "Search Symptoms Button clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         DatabaseHelper myDbHelper = new DatabaseHelper(this);
 
@@ -42,14 +55,18 @@ public class SearchSymptomsActivity extends AppCompatActivity {
 
         try {
             myDbHelper.createDatabase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to create database", e);
+            finish();
+            return;
         }
 
         try {
             myDbHelper.openDatabase();
-        } catch (SQLException sqle) {
-            throw sqle;
+        } catch (SQLException e) {
+            Log.e(TAG, "SQLException in Search Symptoms Activity openDatabase call", e);
+            finish();
+            return;
         }
 
         //Query the symptomstoconditions database to get the related condition(s)
@@ -69,16 +86,12 @@ public class SearchSymptomsActivity extends AppCompatActivity {
 
             conditionListReply += ". Please choose from the list of topics.";
         } else {
-            conditionListReply = "I'm sorry. " +
-                    "Data on this topic is not available." +
-                    " Please choose another topic";
+            conditionListReply = "I'm sorry. Data on this topic is not available. Please choose another topic.";
         }
+
         tt1.speakOut("I really do work");
 
-        Intent goBackToTheBeginning = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
-        startActivity(goBackToTheBeginning);
-    }
-
-    public void speakButtonOnClick3(final View view) {
+        Intent getTopicIntent = new Intent(getBaseContext(), GetTopicActivity.class);
+        startActivity(getTopicIntent);
     }
 }

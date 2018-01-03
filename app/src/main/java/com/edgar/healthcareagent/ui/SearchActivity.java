@@ -1,36 +1,53 @@
-package com.edgar.healthcareagent;
+package com.edgar.healthcareagent.ui;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.edgar.healthcareagent.DatabaseHelper;
+import com.edgar.healthcareagent.R;
+import com.edgar.healthcareagent.model.SearchModel;
+import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.TokenRequest;
 
 import org.json.JSONException;
 
 public class SearchActivity extends AppCompatActivity {
-
-    String id;
+    private static final String TAG = SearchActivity.class.getSimpleName();
 
     private String authToken;
-    private Button speakButton3;
 
-    SearchModel searchModel = new SearchModel();
-
-    public SearchActivity() throws JSONException {
-    }
+    private SearchModel searchModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        speakButton3 = findViewById(R.id.speakButton3);
+        Button searchButton = findViewById(R.id.button_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         final TextToSpeechModel tts = new TextToSpeechModel(this);
         final DatabaseHelper myDbHelper = new DatabaseHelper(this);
+
+        try {
+            searchModel = new SearchModel();
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException instantiating search model");
+            Toast.makeText(this, "Error creating search model", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -51,16 +68,9 @@ public class SearchActivity extends AppCompatActivity {
 
                     tts.speakOut(finalReply);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "JSONException in thread", e);
                 }
             }
         }).start();
-
-        Intent intent = new Intent(getBaseContext(), GetApiAiTopicActivity.class);
-        //tts.onDestroy();
-        startActivity(intent);
-    }
-
-    public void speakButtonOnClick3(final View view) {
     }
 }
