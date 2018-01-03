@@ -1,6 +1,9 @@
-package com.edgar.healthcareagent.contentResult;
+package com.edgar.healthcareagent.model;
 
-import java.util.HashMap;
+import com.edgar.healthcareagent.contentResult.Legal;
+import com.edgar.healthcareagent.contentResult.Title;
+import com.edgar.healthcareagent.model.Credits;
+
 import java.util.Map;
 
 public class Topic {
@@ -10,14 +13,14 @@ public class Topic {
     private String certifiedDate;
     private String lang;
     private String type;
-    private Title title;
+    private com.edgar.healthcareagent.contentResult.Title title;
     private Legal legal;
     private Boolean navigable;
     private Credits credits;
     private String html;
     private String aspect;
     private String detailLevel;
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private Map<String, Object> additionalProperties;
 
     public String getId() {
         return id;
@@ -59,7 +62,7 @@ public class Topic {
         this.type = type;
     }
 
-    public Title getTitle() {
+    public com.edgar.healthcareagent.contentResult.Title getTitle() {
         return title;
     }
 
@@ -116,11 +119,11 @@ public class Topic {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
     }
 
     @Override

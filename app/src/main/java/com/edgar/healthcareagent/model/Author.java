@@ -1,12 +1,11 @@
-package com.edgar.healthcareagent.contentResult;
+package com.edgar.healthcareagent.model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Author {
 
     private String name;
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private Map<String, Object> additionalProperties;
 
     public String getName() {
         return name;
@@ -17,11 +16,11 @@ public class Author {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
     }
 
     @Override

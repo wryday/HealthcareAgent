@@ -7,13 +7,10 @@ import android.util.Log;
 import com.edgar.healthcareagent.DatabaseHelper;
 import com.edgar.healthcareagent.contentResult.ContentResult;
 import com.edgar.healthcareagent.searchResult.Concept;
-import com.edgar.healthcareagent.searchResult.SearchResult;
 import com.edgar.healthcareagent.taxonomyResult.TaxonomyResult;
 import com.edgar.healthcareagent.taxonomyResult.Topic;
 import com.edgar.healthcareagent.taxonomyResult.TopicAspect;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +21,6 @@ import okhttp3.Response;
 
 import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiChoice;
 import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiRequest;
-import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
 
 public class SearchModel {
     private static final String TAG = SearchModel.class.getSimpleName();
@@ -33,9 +29,7 @@ public class SearchModel {
     private String concept;
     private Context context;
 
-    String choice = reply; //import reply from suggestions search
-
-    public SearchModel() throws JSONException {
+    public SearchModel() {
     }
 
     /*getFinalReply first queries the condition to symptom database to see if
@@ -43,13 +37,12 @@ public class SearchModel {
      * associated with the symptoms.  Otherwise it queries the
      * Healthwise API and looks for it as a condition.*/
 
-    public String getReply(String token, DatabaseHelper myDbHelper) throws JSONException {
+    public String getReply(String token, DatabaseHelper myDbHelper) {
         //First query the database to see if choice is a symptom
         //If so send back the list.  Otherwise query the api.
         /*MAKE THIS A SEPARATE METHOD LATER*/
 
        /*   AUTHOR'S NOTE #1
-
             NOT GOING TO SEARCH THE DATABASE RIGHT NOW.  TOO MANY
             COMPLICATIONS:
             1. SYMPTOM AND CONDITION ON THE SAME LIST CREATE INFINITE QUERY LOOP
@@ -61,24 +54,24 @@ public class SearchModel {
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
+
         try {
-
             myDbHelper.openDatabase();
-
         } catch (SQLException sqle) {
-
             throw sqle;
-
         }*/
+
         //Query the symptomstoconditions database to get the related condition(s)
         List<String> conditionsFromSymptom = myDbHelper.getConditionList(ApiAiChoice);
+
         //LEAVING conditionsFromSymptom empty for now getConditionList
         // automatically programmed to return empty list.  (See AUTHOR'S NOTE #1)
 
         if (!conditionsFromSymptom.isEmpty()) {
-            String conditionListReply = "";
+            String conditionListReply;
             conditionListReply = "The suggested list of topics based on the " +
                     "symptom " + ApiAiChoice + "is ";
+
             for (int i = 0; i < conditionsFromSymptom.size(); i++) {
                 conditionListReply += conditionsFromSymptom.get(i);
 
@@ -119,7 +112,7 @@ public class SearchModel {
             SearchResult searchResult = gson.fromJson(response.body().charStream(), SearchResult.class);
 
             String taxonomyUrl = "";
-            String concept = "";
+            String concept;
             String request = ApiAiChoice.toLowerCase();
 
             List<Concept> concepts = searchResult.getConcepts();
@@ -129,13 +122,13 @@ public class SearchModel {
 
                 if (concept.equals(request)) {
                     taxonomyUrl = concepts.get(i).getHref();
-                    Log.d("HEALTHCARE", "Got the Taxonomy url");
+                    Log.d(TAG, "Got the Taxonomy url");
                     break;
                 }
             }
 
             //Second search for the Taxonomy url
-            TaxonomyResult taxonomyResult = null;
+            TaxonomyResult taxonomyResult;
 
             if (!taxonomyUrl.isEmpty()) {
                 Response response2;
@@ -161,7 +154,7 @@ public class SearchModel {
             for (int i = 0; i < aspects.size(); i++) {
                 if (aspects.get(i).getId().equals("whatIs")) {
                     topics = aspects.get(i).getTopics();
-                    Log.d("HEALTHCARE", "Got the topics list");
+                    Log.d(TAG, "Got the topics list");
                     break;
                 }
             }
@@ -177,11 +170,13 @@ public class SearchModel {
                                 /*topics.get(i).getDetailLevel().equals("summary")) &&
                                 (topics.get(i).getTitle().toLowerCase()).equals(requestToCompare)*/) {
                             contentId = topics.get(i).getId();
+
                             contentUrl = topics.get(i).getHref() + "/en-us";
+
                             //contentUrl += "/en-us";
                             //contentUrl = "https://content.healthwise.net/v1/topics/" +
                             //contentId + "/en-us";
-                            Log.d("HEALTHCARE", "Got the content url");
+                            Log.d(TAG, "Got the content url");
                             break;
                         }
                     } catch (NullPointerException e) {
@@ -195,7 +190,8 @@ public class SearchModel {
 
             //This is where we get the final reply
             if (!contentUrl.isEmpty()) {
-                ContentResult contentResult = null;
+                ContentResult contentResult;
+
                 Response contentResponse;
                 Request contentRequest = new Request.Builder()
                         .url(contentUrl)
@@ -205,7 +201,8 @@ public class SearchModel {
                 String contentJSON = contentResponse.body().string();
                 contentResponse.close();
                 contentJSON = contentJSON.replaceAll("[\u0000-\u001f]", "");
-                Log.d("HEALTHCARE", "Got the content");
+
+                Log.d(TAG, "Got the content");
 
                 final Gson gson2 = new Gson();
 

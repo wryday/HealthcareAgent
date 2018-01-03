@@ -1,15 +1,13 @@
-package com.edgar.healthcareagent.searchResult;
+package com.edgar.healthcareagent.model;
 
-import java.util.HashMap;
+import com.edgar.healthcareagent.searchResult.Consumer;
+
 import java.util.Map;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
 public class Title {
 
     private Consumer consumer;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties;
 
     public Consumer getConsumer() {
         return consumer;
@@ -20,11 +18,11 @@ public class Title {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
     }
 
     @Override

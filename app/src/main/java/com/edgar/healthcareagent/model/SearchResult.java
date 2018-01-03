@@ -1,7 +1,9 @@
-package com.edgar.healthcareagent.searchResult;
+package com.edgar.healthcareagent.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.edgar.healthcareagent.searchResult.Concept;
+import com.edgar.healthcareagent.searchResult.Item;
+import com.edgar.healthcareagent.searchResult.Links;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +15,10 @@ public class SearchResult {
     private Integer status;
     private Links links;
     private String schema;
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items;
     private Pagination pagination;
-    private List<Concept> concepts = new ArrayList<Concept>();
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private List<Concept> concepts;
+    private Map<String, Object> additionalProperties;
 
     public Integer getStatus() {
         return status;

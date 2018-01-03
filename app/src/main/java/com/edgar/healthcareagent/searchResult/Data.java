@@ -1,5 +1,7 @@
 package com.edgar.healthcareagent.searchResult;
 
+import com.edgar.healthcareagent.model.Title;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -11,7 +11,7 @@ import com.edgar.healthcareagent.TokenRequest;
 import com.edgar.healthcareagent.rest.ApiClient;
 import com.edgar.healthcareagent.rest.ApiInterface;
 import com.edgar.healthcareagent.searchResult.Concept;
-import com.edgar.healthcareagent.searchResult.SearchResult;
+import com.edgar.healthcareagent.model.SearchResult;
 import com.edgar.healthcareagent.suggestions.Suggestions;
 import com.edgar.healthcareagent.taxonomyResult.TaxonomyResult;
 import com.edgar.healthcareagent.taxonomyResult.Topic;
