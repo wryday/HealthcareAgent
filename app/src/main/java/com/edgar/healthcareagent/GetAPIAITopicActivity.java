@@ -1,7 +1,10 @@
 package com.edgar.healthcareagent;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -58,20 +61,27 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         aiBot = new AiBot(this);
 
         mIntroTextView = findViewById(R.id.intro_text);
+
         mSpeechDetectButton = findViewById(R.id.speak_button);
+        mSpeechDetectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int permissionCheck = ContextCompat.checkSelfPermission(
+                        GetApiAiTopicActivity.this,
+                        Manifest.permission.RECORD_AUDIO);
 
-        String intro = "WELCOME TO THE HEALTHCARE AGENT APP \n" +
-                "PLEASE PRESS BUTTON AND MAKE YOUR REQUEST";
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    listenForTopic();
+                } else {
+                    requestPermission();
+                }
+            }
+        });
 
-        mIntroTextView.setText(intro);
 
         //resultTextView = (TextView) findViewById(R.id.resultTextView);
         //resultScrollView = (ScrollView) findViewById((R.id.resultScrollView));
         //String ApiAiRequest = aiBot.ApiAiRequest;
-    }
-
-    public void speakButtonOnClick(final View view) {
-        aiService.startListening();
     }
 
     @Override
@@ -130,5 +140,14 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
 
     @Override
     public void onAudioLevel(final float level) {
+    }
+
+    private void listenForTopic() {
+        aiService.startListening();
+    }
+
+    private void requestPermission() {
+        Log.i(TAG, "Requesting RECORD_AUDIO permission");
+
     }
 }

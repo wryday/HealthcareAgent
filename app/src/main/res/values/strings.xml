@@ -2,4 +2,7 @@
 
     <string name="app_name">HealthcareAgent</string>
 
+    <string name="text_intro">Welcome to HealthcareAgent\nPress the speech button to begin your search</string>
+    <string name="button_speak">Speak to me</string>
+
 </resources>
