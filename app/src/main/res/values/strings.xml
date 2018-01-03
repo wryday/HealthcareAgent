@@ -5,4 +5,6 @@
     <string name="text_intro">Welcome to HealthcareAgent\n\nPress the speech button to begin your search</string>
     <string name="button_speak">Speak to me</string>
 
+    <string name="speak_detect_error">I\'m sorry.  I didn\'t get that. Please press button again and repeat the topic.</string>
+
 </resources>

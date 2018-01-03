@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
@@ -37,9 +36,6 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
     public static String ApiAiChoice;
 
     public static String reply = "The suggested list of topics are ";
-
-    private Button mSpeechDetectButton;
-    private TextView mIntroTextView;
 
     private AIService aiService;
 
@@ -65,9 +61,7 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
         tts = new TextToSpeechModel(this);
         aiBot = new AiBot(this);
 
-        mIntroTextView = findViewById(R.id.intro_text);
-
-        mSpeechDetectButton = findViewById(R.id.speak_button);
+        Button mSpeechDetectButton = findViewById(R.id.speak_button);
         mSpeechDetectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,28 +113,23 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
     @Override
     public void onError(AIError error) {
         Log.d(TAG, "Error detecting speech");
-
-        tts.speakOut("I'm sorry.  I didn't get that. Please press button" +
-                "again and repeat the topic.");
-
-        String errorString = error.getMessage();
-
-        Toast.makeText(this, "Error: " + errorString, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+        tts.speakOut(getString(R.string.speak_detect_error));
     }
 
     @Override
     public void onListeningStarted() {
-        Log.d(TAG, "listening started!");
+        Log.v(TAG, "listening started");
     }
 
     @Override
     public void onListeningCanceled() {
-        Log.d(TAG, "listening cancelled!");
+        Log.v(TAG, "listening canceled");
     }
 
     @Override
     public void onListeningFinished() {
-        Log.d(TAG, "listening finished");
+        Log.v(TAG, "listening finished");
     }
 
     @Override
