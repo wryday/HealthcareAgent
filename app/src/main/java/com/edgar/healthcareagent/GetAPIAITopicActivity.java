@@ -1,9 +1,13 @@
 package com.edgar.healthcareagent;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,6 +30,7 @@ import ai.api.model.Result;
 public class GetApiAiTopicActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = GetApiAiTopicActivity.class.getSimpleName();
 
+    private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1414;
     private static final String AI_ACCESS_CODE = "330c83acba834b0f8d904734f56df684";
 
     public static String ApiAiRequest;
@@ -149,5 +154,63 @@ public class GetApiAiTopicActivity extends AppCompatActivity implements AIListen
     private void requestPermission() {
         Log.i(TAG, "Requesting RECORD_AUDIO permission");
 
+        if ((ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.RECORD_AUDIO))) {
+            showRecordAudioRationale();
+        } else {
+            requestRecordAudioPermission();
+        }
+    }
+
+    private void showRecordAudioRationale() {
+        new AlertDialog.Builder(this)
+                .setTitle("Permission Needed")
+                .setMessage("This app requires permission to record audio in order to function")
+                .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showNeedsPermissionToast();
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        requestRecordAudioPermission();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void requestRecordAudioPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.RECORD_AUDIO},
+                PERMISSIONS_REQUEST_RECORD_AUDIO);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_RECORD_AUDIO:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    listenForTopic();
+                } else {
+                    showNeedsPermissionToast();
+                }
+
+                return;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void showNeedsPermissionToast() {
+        Toast.makeText(
+                this,
+                "RECORD_AUDIO permission required for speech requests",
+                Toast.LENGTH_SHORT)
+                .show();
     }
 }
