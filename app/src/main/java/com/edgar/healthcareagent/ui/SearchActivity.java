@@ -4,23 +4,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.edgar.healthcareagent.DatabaseHelper;
 import com.edgar.healthcareagent.R;
+import com.edgar.healthcareagent.TokenRequest;
 import com.edgar.healthcareagent.model.SearchModel;
 import com.edgar.healthcareagent.model.TextToSpeechModel;
-import com.edgar.healthcareagent.TokenRequest;
-
-import org.json.JSONException;
 
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = SearchActivity.class.getSimpleName();
 
     private String authToken;
+
+    private String query;
 
     private SearchModel searchModel;
 
@@ -28,6 +26,10 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        if (getIntent().getExtras() != null) {
+            query = getIntent().getStringExtra("query");
+        }
 
         Button searchButton = findViewById(R.id.button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -40,23 +42,15 @@ public class SearchActivity extends AppCompatActivity {
         final TextToSpeechModel tts = new TextToSpeechModel(this);
         final DatabaseHelper myDbHelper = new DatabaseHelper(this);
 
-        try {
-            searchModel = new SearchModel();
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException instantiating search model");
-            Toast.makeText(this, "Error creating search model", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        searchModel = new SearchModel();
 
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
-                try {
-                    TokenRequest tokenRequest = new TokenRequest();
-                    authToken = tokenRequest.getToken();
-                    String finalReply = searchModel.getReply(authToken, myDbHelper);
+                TokenRequest tokenRequest = new TokenRequest();
+                authToken = tokenRequest.getToken();
+                String finalReply = searchModel.getReply(authToken, myDbHelper, query);
                    /*if(finalReply.equals("I'm sorry.  " +
                             "Data on this topic is not available" +
                             "Please choose another topic")){
@@ -66,10 +60,7 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(proceedWithSymptomSearch);
                     }*/
 
-                    tts.speakOut(finalReply);
-                } catch (JSONException e) {
-                    Log.e(TAG, "JSONException in thread", e);
-                }
+                tts.speakOut(finalReply);
             }
         }).start();
     }

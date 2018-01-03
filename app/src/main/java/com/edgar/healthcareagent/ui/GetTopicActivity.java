@@ -108,7 +108,12 @@ public class GetTopicActivity extends AppCompatActivity implements AIListener {
         ApiAiChoice = responseResult.getFulfillment().getSpeech();
         ApiAiRequest = ApiAiChoice.replace(' ', '+');//adds '+' for REST query
 
+        String resolvedQuery = responseResult.getResolvedQuery();
+
+        Toast.makeText(this, "Query: " + resolvedQuery, Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+        intent.putExtra("query", resolvedQuery);
         startActivity(intent);
     }
 

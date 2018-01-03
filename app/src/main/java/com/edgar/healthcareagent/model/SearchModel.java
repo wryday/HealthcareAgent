@@ -19,9 +19,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiChoice;
-import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiRequest;
-
 public class SearchModel {
     private static final String TAG = SearchModel.class.getSimpleName();
 
@@ -37,7 +34,9 @@ public class SearchModel {
      * associated with the symptoms.  Otherwise it queries the
      * Healthwise API and looks for it as a condition.*/
 
-    public String getReply(String token, DatabaseHelper myDbHelper) {
+    public String getReply(String token, DatabaseHelper myDbHelper, String query) {
+        Log.v(TAG, "getReply token: " + token + " query: " + query);
+
         //First query the database to see if choice is a symptom
         //If so send back the list.  Otherwise query the api.
         /*MAKE THIS A SEPARATE METHOD LATER*/
@@ -62,7 +61,7 @@ public class SearchModel {
         }*/
 
         //Query the symptomstoconditions database to get the related condition(s)
-        List<String> conditionsFromSymptom = myDbHelper.getConditionList(ApiAiChoice);
+        List<String> conditionsFromSymptom = myDbHelper.getConditionList(query);
 
         //LEAVING conditionsFromSymptom empty for now getConditionList
         // automatically programmed to return empty list.  (See AUTHOR'S NOTE #1)
@@ -70,7 +69,7 @@ public class SearchModel {
         if (!conditionsFromSymptom.isEmpty()) {
             String conditionListReply;
             conditionListReply = "The suggested list of topics based on the " +
-                    "symptom " + ApiAiChoice + "is ";
+                    "symptom " + query + " is ";
 
             for (int i = 0; i < conditionsFromSymptom.size(); i++) {
                 conditionListReply += conditionsFromSymptom.get(i);
@@ -91,7 +90,7 @@ public class SearchModel {
         /*Otherwise query the Healthwise API*/
         String resultFinal = "";
         String searchUrl = "https://search.healthwise.net/v1/search?q="
-                + ApiAiRequest + "&top=5&skip=12&num_concepts=12";
+                + query + "&top=5&skip=12&num_concepts=12";
 
         OkHttpClient client = new OkHttpClient();
         Request newRequest1 = new Request.Builder()
@@ -113,7 +112,6 @@ public class SearchModel {
 
             String taxonomyUrl = "";
             String concept;
-            String request = ApiAiChoice.toLowerCase();
 
             List<Concept> concepts = searchResult.getConcepts();
 
@@ -159,7 +157,7 @@ public class SearchModel {
                 }
             }
 
-            String requestToCompare = "what is " + request + "?";
+            String requestToCompare = "what is " + query + "?";
 
             if (topics != null) {
                 //make everything lowercase to avoid problems

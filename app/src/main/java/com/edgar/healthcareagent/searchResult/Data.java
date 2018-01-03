@@ -2,12 +2,8 @@ package com.edgar.healthcareagent.searchResult;
 
 import com.edgar.healthcareagent.model.Title;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
 public class Data {
 
     private String id;
@@ -18,7 +14,7 @@ public class Data {
     private Title title;
     private Abstract _abstract;
     private Integer duration;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties;
 
     public String getId() {
         return id;
@@ -68,11 +64,11 @@ public class Data {
         this.title = title;
     }
 
-    public Abstract getAbstract() {
+    public Abstract get_abstract() {
         return _abstract;
     }
 
-    public void setAbstract(Abstract _abstract) {
+    public void set_abstract(Abstract _abstract) {
         this._abstract = _abstract;
     }
 
@@ -85,11 +81,11 @@ public class Data {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
     }
 
     @Override

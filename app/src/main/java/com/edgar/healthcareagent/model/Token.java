@@ -1,4 +1,4 @@
-package com.edgar.healthcareagent.token;
+package com.edgar.healthcareagent.model;
 
 public class Token {
 

@@ -4,7 +4,7 @@ import com.edgar.healthcareagent.contentResult.ContentResult;
 import com.edgar.healthcareagent.model.SearchResult;
 import com.edgar.healthcareagent.suggestions.Suggestions;
 import com.edgar.healthcareagent.taxonomyResult.TaxonomyResult;
-import com.edgar.healthcareagent.token.Token;
+import com.edgar.healthcareagent.model.Token;
 
 import java.util.Map;
 
