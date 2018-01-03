@@ -2,13 +2,10 @@ package com.edgar.healthcareagent;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.edgar.healthcareagent.suggestions.Suggestions;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +16,7 @@ import okhttp3.Response;
 
 import static com.edgar.healthcareagent.ui.GetSuggestionsActivity.replyOk;
 
-public class SuggestionAndResponseModel extends AppCompatActivity {
+public class SuggestionAndResponseModel {
     private static final String TAG = SuggestionAndResponseModel.class.getSimpleName();
 
     public static Suggestions suggestions;
@@ -31,12 +28,12 @@ public class SuggestionAndResponseModel extends AppCompatActivity {
 
     private Context context;
 
-    SuggestionAndResponseModel(String token, Context context) throws JSONException {
+    public SuggestionAndResponseModel(String token, Context context) {
         this.token = token;
         this.request = request;
     }
 
-    public String suggestionSearch(String token2, String request) throws JSONException {
+    public String suggestionSearch(String token2, String request) {
         String url = "https://search.healthwise.net/v1/suggestions?q=" + request +
                 "&fq=types%3A(HWCV_10000+HWCV_10002+HWCV_10003)" +
                 "&content=content%3D(article+topic)&top=2";
@@ -77,8 +74,7 @@ public class SuggestionAndResponseModel extends AppCompatActivity {
                 reply += "Please press the button and make your choice?";
                 replyOk = true;
             } else {
-                reply = "I'm sorry. Information on this topic is not available." +
-                        "Please press the button and choose another topic";
+                reply = "I'm sorry. Information on this topic is not available. Please press the button and choose another topic";
                 replyOk = false;
             }
 

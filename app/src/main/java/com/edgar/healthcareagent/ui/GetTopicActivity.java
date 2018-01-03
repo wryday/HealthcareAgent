@@ -33,7 +33,6 @@ public class GetTopicActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = GetTopicActivity.class.getSimpleName();
 
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1414;
-    private static final String AI_ACCESS_CODE = "330c83acba834b0f8d904734f56df684";
 
     public static String ApiAiRequest;
     public static String ApiAiChoice;
@@ -55,7 +54,8 @@ public class GetTopicActivity extends AppCompatActivity implements AIListener {
         setContentView(R.layout.activity_get_topic);
 
         //AI Chat Bot Setup
-        final AIConfiguration config = new AIConfiguration(AI_ACCESS_CODE,
+        final AIConfiguration config = new AIConfiguration(
+                getString(R.string.ai_client_access_token),
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
 

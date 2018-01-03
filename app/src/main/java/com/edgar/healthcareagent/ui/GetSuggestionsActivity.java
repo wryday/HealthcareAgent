@@ -7,14 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.edgar.healthcareagent.R;
 import com.edgar.healthcareagent.SuggestionAndResponseModel;
-import com.edgar.healthcareagent.model.TextToSpeechModel;
 import com.edgar.healthcareagent.TokenRequest;
+import com.edgar.healthcareagent.model.TextToSpeechModel;
 import com.google.gson.JsonElement;
-
-import org.json.JSONException;
 
 import java.util.Map;
 
@@ -31,35 +30,43 @@ import static com.edgar.healthcareagent.ui.GetTopicActivity.ApiAiRequest;
 public class GetSuggestionsActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = GetSuggestionsActivity.class.getSimpleName();
 
+    public static boolean replyOk = true;
+
     public static String token;
     public static String request;
     public static String APIAIchoice;
-    public static boolean replyOk = true;
 
-    private String AIAccessCode = "330c83acba834b0f8d904734f56df684";
-    private Button speakButton2;
     private AIService aiService;
     private String suggestion_list;
+
     public SuggestionAndResponseModel suggestionAndResponse =
             new SuggestionAndResponseModel(token, this);
+
     private TextToSpeechModel tts;
-
-    Intent intent;
-
-    public GetSuggestionsActivity() throws JSONException {
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tts = new TextToSpeechModel(this);
         setContentView(R.layout.activity_get_suggestions);
-        final AIConfiguration config = new AIConfiguration(AIAccessCode,
+
+        tts = new TextToSpeechModel(this);
+
+        final AIConfiguration config = new AIConfiguration(
+                getString(R.string.ai_client_access_token),
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
+
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
+
         final TokenRequest tokenRequest = new TokenRequest();
-        speakButton2 = (Button) findViewById(R.id.speakButton2);
+
+        Button suggestionsButton = findViewById(R.id.button_suggestions);
+        suggestionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aiService.startListening();
+            }
+        });
 
         //Get the access token and the suggestions from HW API
         //ASYNCHRONOUSLY!!!
@@ -68,24 +75,15 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
             @RequiresApi(api = KITKAT)
             @Override
             public void run() {
-                try {
-                    token = tokenRequest.getToken();
+                token = tokenRequest.getToken();
 
-                    //this is what the bot will say after suggestionSearch is done:
-                    //"Which one will you choose?"
-                    suggestion_list = suggestionAndResponse.suggestionSearch(token, ApiAiRequest);
+                suggestion_list = suggestionAndResponse.suggestionSearch(token, ApiAiRequest);
 
-                    /*this is the response from the bot with user's choice
-                    This response will be taken to the search model where
-                    we find the info about the topic through several searches*/
-                    tts.speakOut(suggestion_list);
+                tts.speakOut(suggestion_list);
 
-                    if (!replyOk) {
-                        intent = new Intent(getBaseContext(), GetTopicActivity.class);
-                        startActivity(intent);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (!replyOk) {
+                    Intent intent = new Intent(getBaseContext(), GetTopicActivity.class);
+                    startActivity(intent);
                 }
             }
         }).start();
@@ -97,53 +95,58 @@ public class GetSuggestionsActivity extends AppCompatActivity implements AIListe
         Result responseResult = result.getResult();
 
         // Get my choice back to send to the search activity
-        String parameterString = "";
+        StringBuilder parameterString = new StringBuilder();
 
         if (responseResult.getParameters() != null && !responseResult.getParameters().isEmpty()) {
             for (final Map.Entry<String, JsonElement> entry : responseResult.getParameters().entrySet()) {
-                parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
+                parameterString
+                        .append("(")
+                        .append(entry.getKey())
+                        .append(", ")
+                        .append(entry.getValue())
+                        .append(") ");
             }
         } else {
             Log.e(TAG, "result parameters were null or empty");
         }
 
-        ApiAiRequest = responseResult.getResolvedQuery();//this is the condition I've finally chosen
+        Toast.makeText(this, "Parameters: " + parameterString.toString(), Toast.LENGTH_SHORT).show();
+
+        //this is the condition I've finally chosen
+        ApiAiRequest = responseResult.getResolvedQuery();
+
         //This is ApiAiRequest with '+' separating words for the url
         APIAIchoice = ApiAiRequest.replace(' ', '+');
 
-        if (!replyOk) {
-            intent = new Intent(getBaseContext(), GetTopicActivity.class);
-            startActivity(intent);
-        } else {
-            intent = new Intent(getBaseContext(), SearchActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getBaseContext(),
+                replyOk
+                        ? SearchActivity.class
+                        : GetTopicActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onError(AIError error) {
-        tts.speakOut("I'm sorry I didn't get that. " +
-                " Please press button and repeat your choice of topic");
-        intent = new Intent(getBaseContext(), GetTopicActivity.class);
-    }
-
-    public void speakButtonOnClick2(final View view) {
-        aiService.startListening();
+        tts.speakOut("I'm sorry I didn't get that. Please press button and repeat your request.");
     }
 
     @Override
     public void onAudioLevel(float level) {
+        Log.v(TAG, "onAudioLevel");
     }
 
     @Override
     public void onListeningStarted() {
+        Log.v(TAG, "onListeningStarted");
     }
 
     @Override
     public void onListeningCanceled() {
+        Log.v(TAG, "onListeningCanceled");
     }
 
     @Override
     public void onListeningFinished() {
+        Log.v(TAG, "onListeningFinished");
     }
 }

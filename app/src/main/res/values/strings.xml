@@ -2,6 +2,8 @@
 
     <string name="app_name">HealthcareAgent</string>
 
+    <string name="ai_client_access_token">330c83acba834b0f8d904734f56df684</string>
+
     <string name="text_intro">Welcome to HealthcareAgent\n\nPress the speech button to begin your search</string>
     <string name="button_speak">Speak to me</string>
 
