@@ -7,11 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.edgar.healthcareagent.DatabaseHelper;
+import com.edgar.healthcareagent.util.DatabaseHelper;
 import com.edgar.healthcareagent.R;
-import com.edgar.healthcareagent.TokenRequest;
-import com.edgar.healthcareagent.model.SearchModel;
-import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.util.TokenRequest;
+import com.edgar.healthcareagent.util.SearchModel;
+import com.edgar.healthcareagent.util.TextToSpeechModel;
 
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = SearchActivity.class.getSimpleName();

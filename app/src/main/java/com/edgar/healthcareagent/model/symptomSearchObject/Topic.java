@@ -1,25 +1,26 @@
-package com.edgar.healthcareagent.model;
+package com.edgar.healthcareagent.model.symptomSearchObject;
 
-import com.edgar.healthcareagent.model.contentResult.Legal;
-import com.edgar.healthcareagent.model.contentResult.Title;
-
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Topic {
 
     private String id;
     private String version;
+    private String hash;
     private String certifiedDate;
     private String lang;
     private String type;
-    private com.edgar.healthcareagent.model.contentResult.Title title;
+    private Title title;
     private Legal legal;
     private Boolean navigable;
     private Credits credits;
     private String html;
+    private List<Taxonomy> taxonomy = null;
     private String aspect;
     private String detailLevel;
-    private Map<String, Object> additionalProperties;
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public String getId() {
         return id;
@@ -35,6 +36,14 @@ public class Topic {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getCertifiedDate() {
@@ -61,7 +70,7 @@ public class Topic {
         this.type = type;
     }
 
-    public com.edgar.healthcareagent.model.contentResult.Title getTitle() {
+    public Title getTitle() {
         return title;
     }
 
@@ -101,6 +110,14 @@ public class Topic {
         this.html = html;
     }
 
+    public List<Taxonomy> getTaxonomy() {
+        return taxonomy;
+    }
+
+    public void setTaxonomy(List<Taxonomy> taxonomy) {
+        this.taxonomy = taxonomy;
+    }
+
     public String getAspect() {
         return aspect;
     }
@@ -118,11 +135,11 @@ public class Topic {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return additionalProperties;
+        return this.additionalProperties;
     }
 
-    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-        this.additionalProperties = additionalProperties;
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
     @Override
@@ -130,6 +147,7 @@ public class Topic {
         return "Topic{" +
                 "id='" + id + '\'' +
                 ", version='" + version + '\'' +
+                ", hash='" + hash + '\'' +
                 ", certifiedDate='" + certifiedDate + '\'' +
                 ", lang='" + lang + '\'' +
                 ", type='" + type + '\'' +
@@ -138,6 +156,7 @@ public class Topic {
                 ", navigable=" + navigable +
                 ", credits=" + credits +
                 ", html='" + html + '\'' +
+                ", taxonomy=" + taxonomy +
                 ", aspect='" + aspect + '\'' +
                 ", detailLevel='" + detailLevel + '\'' +
                 ", additionalProperties=" + additionalProperties +

@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.edgar.healthcareagent.SuggestionAndResponseModel.reply;
+import static com.edgar.healthcareagent.util.SuggestionAndResponseModel.reply;
 
 public class SearchSymptomsModel {
 

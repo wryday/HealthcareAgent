@@ -15,9 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.edgar.healthcareagent.AiBot;
+import com.edgar.healthcareagent.util.AiBot;
 import com.edgar.healthcareagent.R;
-import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.util.TextToSpeechModel;
 import com.google.gson.JsonElement;
 
 import java.util.Map;

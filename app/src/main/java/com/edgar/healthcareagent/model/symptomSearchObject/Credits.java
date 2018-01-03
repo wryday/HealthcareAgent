@@ -1,17 +1,15 @@
-package com.edgar.healthcareagent.model;
+package com.edgar.healthcareagent.model.symptomSearchObject;
 
-import com.edgar.healthcareagent.model.contentResult.PrimaryReviewer;
-import com.edgar.healthcareagent.model.contentResult.SecondaryReviewer;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Credits {
 
     private Author author;
-    private List<PrimaryReviewer> primaryReviewers;
-    private List<SecondaryReviewer> secondaryReviewers;
-    private Map<String, Object> additionalProperties;
+    private List<PrimaryReviewer> primaryReviewers = null;
+    private List<SecondaryReviewer> secondaryReviewers = null;
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Author getAuthor() {
         return author;
@@ -38,11 +36,11 @@ public class Credits {
     }
 
     public Map<String, Object> getAdditionalProperties() {
-        return additionalProperties;
+        return this.additionalProperties;
     }
 
-    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-        this.additionalProperties = additionalProperties;
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
     @Override

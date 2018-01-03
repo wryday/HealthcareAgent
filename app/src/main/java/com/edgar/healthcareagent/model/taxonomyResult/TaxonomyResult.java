@@ -1,24 +1,18 @@
-package com.edgar.healthcareagent.model;
+package com.edgar.healthcareagent.model.taxonomyResult;
 
-import com.edgar.healthcareagent.model.searchResult.Concept;
-import com.edgar.healthcareagent.model.searchResult.Item;
-import com.edgar.healthcareagent.model.searchResult.Links;
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class SearchResult {
+public class TaxonomyResult {
 
     private Integer status;
     private Links links;
     private String schema;
-    private List<Item> items;
-    private Pagination pagination;
-    private List<Concept> concepts;
-    private Map<String, Object> additionalProperties;
+    private Data data;
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getStatus() {
         return status;
@@ -44,28 +38,12 @@ public class SearchResult {
         this.schema = schema;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Data getData() {
+        return data;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public Pagination getPagination() {
-        return pagination;
-    }
-
-    public void setPagination(Pagination pagination) {
-        this.pagination = pagination;
-    }
-
-    public List<Concept> getConcepts() {
-        return concepts;
-    }
-
-    public void setConcepts(List<Concept> concepts) {
-        this.concepts = concepts;
+    public void setData(Data data) {
+        this.data = data;
     }
 
     public Map<String, Object> getAdditionalProperties() {
@@ -78,13 +56,11 @@ public class SearchResult {
 
     @Override
     public String toString() {
-        return "SearchResult{" +
+        return "TaxonomyResult{" +
                 "status=" + status +
                 ", links=" + links +
                 ", schema='" + schema + '\'' +
-                ", items=" + items +
-                ", pagination=" + pagination +
-                ", concepts=" + concepts +
+                ", data=" + data +
                 ", additionalProperties=" + additionalProperties +
                 '}';
     }

@@ -1,24 +1,17 @@
-package com.edgar.healthcareagent.model;
+package com.edgar.healthcareagent.model.searchSymptom;
 
-import com.edgar.healthcareagent.model.searchResult.Concept;
-import com.edgar.healthcareagent.model.searchResult.Item;
-import com.edgar.healthcareagent.model.searchResult.Links;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
-public class SearchResult {
+public class SearchSymptom {
 
     private Integer status;
+    private Versioning versioning;
     private Links links;
     private String schema;
-    private List<Item> items;
-    private Pagination pagination;
-    private List<Concept> concepts;
-    private Map<String, Object> additionalProperties;
+    private List<Item> items = null;
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public Integer getStatus() {
         return status;
@@ -26,6 +19,14 @@ public class SearchResult {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Versioning getVersioning() {
+        return versioning;
+    }
+
+    public void setVersioning(Versioning versioning) {
+        this.versioning = versioning;
     }
 
     public Links getLinks() {
@@ -52,22 +53,6 @@ public class SearchResult {
         this.items = items;
     }
 
-    public Pagination getPagination() {
-        return pagination;
-    }
-
-    public void setPagination(Pagination pagination) {
-        this.pagination = pagination;
-    }
-
-    public List<Concept> getConcepts() {
-        return concepts;
-    }
-
-    public void setConcepts(List<Concept> concepts) {
-        this.concepts = concepts;
-    }
-
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
@@ -78,13 +63,12 @@ public class SearchResult {
 
     @Override
     public String toString() {
-        return "SearchResult{" +
+        return "SearchSymptom{" +
                 "status=" + status +
+                ", versioning=" + versioning +
                 ", links=" + links +
                 ", schema='" + schema + '\'' +
                 ", items=" + items +
-                ", pagination=" + pagination +
-                ", concepts=" + concepts +
                 ", additionalProperties=" + additionalProperties +
                 '}';
     }

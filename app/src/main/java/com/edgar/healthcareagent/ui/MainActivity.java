@@ -7,15 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 
-import com.edgar.healthcareagent.TokenRequest;
+import com.edgar.healthcareagent.util.TokenRequest;
 import com.edgar.healthcareagent.rest.ApiClient;
 import com.edgar.healthcareagent.rest.ApiInterface;
-import com.edgar.healthcareagent.searchResult.Concept;
+import com.edgar.healthcareagent.model.searchResult.Concept;
 import com.edgar.healthcareagent.model.SearchResult;
-import com.edgar.healthcareagent.suggestions.Suggestions;
-import com.edgar.healthcareagent.taxonomyResult.TaxonomyResult;
-import com.edgar.healthcareagent.taxonomyResult.Topic;
-import com.edgar.healthcareagent.taxonomyResult.TopicAspect;
+import com.edgar.healthcareagent.model.suggestions.Suggestions;
+import com.edgar.healthcareagent.model.taxonomyResult.TaxonomyResult;
+import com.edgar.healthcareagent.model.taxonomyResult.Topic;
+import com.edgar.healthcareagent.model.taxonomyResult.TopicAspect;
 
 import java.util.HashMap;
 import java.util.List;

@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.edgar.healthcareagent.DatabaseHelper;
+import com.edgar.healthcareagent.util.DatabaseHelper;
 import com.edgar.healthcareagent.R;
 import com.edgar.healthcareagent.model.SearchSymptomsModel;
-import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.util.TextToSpeechModel;
 
 import org.json.JSONException;
 

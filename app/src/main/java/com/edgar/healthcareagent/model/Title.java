@@ -1,6 +1,6 @@
 package com.edgar.healthcareagent.model;
 
-import com.edgar.healthcareagent.searchResult.Consumer;
+import com.edgar.healthcareagent.model.searchResult.Consumer;
 
 import java.util.Map;
 

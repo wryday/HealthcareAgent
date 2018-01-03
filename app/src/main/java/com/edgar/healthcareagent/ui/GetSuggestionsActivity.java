@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.edgar.healthcareagent.R;
-import com.edgar.healthcareagent.SuggestionAndResponseModel;
-import com.edgar.healthcareagent.TokenRequest;
-import com.edgar.healthcareagent.model.TextToSpeechModel;
+import com.edgar.healthcareagent.util.SuggestionAndResponseModel;
+import com.edgar.healthcareagent.util.TokenRequest;
+import com.edgar.healthcareagent.util.TextToSpeechModel;
 import com.google.gson.JsonElement;
 
 import java.util.Map;
