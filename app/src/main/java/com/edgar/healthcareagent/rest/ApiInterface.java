@@ -1,10 +1,10 @@
 package com.edgar.healthcareagent.rest;
 
-import com.edgar.healthcareagent.model.contentResult.ContentResult;
 import com.edgar.healthcareagent.model.SearchResult;
+import com.edgar.healthcareagent.model.Token;
+import com.edgar.healthcareagent.model.contentResult.ContentResult;
 import com.edgar.healthcareagent.model.suggestions.Suggestions;
 import com.edgar.healthcareagent.model.taxonomyResult.TaxonomyResult;
-import com.edgar.healthcareagent.model.Token;
 
 import java.util.Map;
 

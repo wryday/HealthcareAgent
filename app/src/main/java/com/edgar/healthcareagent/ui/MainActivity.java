@@ -7,15 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 
-import com.edgar.healthcareagent.util.TokenRequest;
-import com.edgar.healthcareagent.rest.ApiClient;
-import com.edgar.healthcareagent.rest.ApiInterface;
-import com.edgar.healthcareagent.model.searchResult.Concept;
+import com.edgar.healthcareagent.R;
 import com.edgar.healthcareagent.model.SearchResult;
+import com.edgar.healthcareagent.model.searchResult.Concept;
 import com.edgar.healthcareagent.model.suggestions.Suggestions;
 import com.edgar.healthcareagent.model.taxonomyResult.TaxonomyResult;
 import com.edgar.healthcareagent.model.taxonomyResult.Topic;
 import com.edgar.healthcareagent.model.taxonomyResult.TopicAspect;
+import com.edgar.healthcareagent.rest.ApiClient;
+import com.edgar.healthcareagent.rest.ApiInterface;
+import com.edgar.healthcareagent.util.TokenRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,24 +29,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//import static com.edgar.healthcareagent.ui.GetSuggestionsActivity.replyOk;
-
 public class MainActivity extends AppCompatActivity implements AIListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private String ClientId = "4488c302a1be4a6ca430b63661843c43";
     private String ClientSecret = "qOGnt7wlB0eQo0pbaEcoXw==";
 
-    public static String token = "";
+    private String contentID = "angina";
 
-    String contentID = "angina";
-    String search_BASE_URL = "https://search.healthwise.net/v1/";
-    String auth_BASE_URL = "https://auth.healthwise.net/v1/oauth2/";
-    //String taxonomy_BASE_URL = "https://taxonomy.healthwise.net/v1";
-    String content_BASE_URL = "https://content.healthwise.net/v1/topics/" +
-            contentID + "/en-us";
-    String request = "angina";
-    Boolean replyOk = true;
+    private String request = "angina";
+    private Boolean replyOk = true;
+
+    private Call<Suggestions> fetchSuggestionsCall;
 
     public static String reply = "";
 
@@ -67,23 +62,71 @@ public class MainActivity extends AppCompatActivity implements AIListener {
             public void run() {
                 TokenRequest tokenRequest = new TokenRequest();
                 String authToken = tokenRequest.getToken();
-                ApiInterface searchApi =
-                        ApiClient.getClient(search_BASE_URL, authToken).create(ApiInterface.class);
+                ApiInterface searchApi = ApiClient
+                        .getClient(
+                                getString(R.string.search_base_url),
+                                authToken)
+                        .create(ApiInterface.class);
                 String taxonomyUrl = getSearchTopic(searchApi, contentID);
                 contentID = contentID.toLowerCase();
             }
         }).start();
-        /*
-        ApiInterface suggestionApi =
-                ApiClient.getClient(search_BASE_URL, token).create(ApiInterface.class);
-        getSuggestionList(suggestionApi, "angina");
-        ApiInterface searchApi =
-                ApiClient.getClient(search_BASE_URL, token).create(ApiInterface.class);
-        contentID = contentID.toLowerCase();
-        String taxonomyUrl = getSearchTopic(searchApi, contentID);
-        ApiInterface taxonomyApi =
-                ApiClient.getClient(taxonomyUrl, token).create(ApiInterface.class);
-        String contentUrl = getTaxonomyTopic(taxonomyApi);  */
+
+//        ApiInterface suggestionApi = ApiClient
+//                .getClient(getString(R.string.search_base_url), token)
+//                .create(ApiInterface.class);
+//        getSuggestionList(suggestionApi, "angina");
+//
+//        ApiInterface searchApi = ApiClient
+//                .getClient(getString(R.string.search_base_url), token)
+//                .create(ApiInterface.class);
+//        contentID = contentID.toLowerCase();
+//        String taxonomyUrl = getSearchTopic(searchApi, contentID);
+//
+//        ApiInterface taxonomyApi = ApiClient
+//                .getClient(taxonomyUrl, token)
+//                .create(ApiInterface.class);
+//        String contentUrl = getTaxonomyTopic(taxonomyApi);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (fetchSuggestionsCall != null) {
+            fetchSuggestionsCall.cancel();
+            fetchSuggestionsCall = null;
+        }
+    }
+
+    @Override
+    public void onError(AIError error) {
+
+    }
+
+    @Override
+    public void onResult(AIResponse result) {
+
+    }
+
+    @Override
+    public void onAudioLevel(float level) {
+
+    }
+
+    @Override
+    public void onListeningStarted() {
+
+    }
+
+    @Override
+    public void onListeningCanceled() {
+
+    }
+
+    @Override
+    public void onListeningFinished() {
+
     }
 
     public void getSuggestionList(ApiInterface apiService, String request) {
@@ -94,13 +137,33 @@ public class MainActivity extends AppCompatActivity implements AIListener {
         data.put("q", request);
 
         Call<Suggestions> call = apiService.getSuggestions(data);
-        String what = call.request().toString();
+
+
+        fetchSuggestionsCall = apiService.getSuggestions(data);
+        fetchSuggestionsCall.enqueue(new Callback<Suggestions>() {
+            @Override
+            public void onResponse(Call<Suggestions> call, Response<Suggestions> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Suggestions> call, Throwable t) {
+                if (call.isCanceled()) {
+                    Log.v(TAG, "Fetch suggestions call canceled");
+                } else {
+                    Log.e(TAG, "Fetch suggestions call failed", t);
+                }
+            }
+        });
+
+
         call.enqueue(new Callback<Suggestions>() {
             @Override
             public void onResponse(Call<Suggestions> call, Response<Suggestions> response) {
-                Log.d("RETRO", "Entering onResponse");
+                Log.d(TAG, "Entering onResponse");
+
                 List labels = response.body().getItems();
-                Log.d("RETRO", "Got the list of labels");
+                Log.d(TAG, "Got the list of labels");
                 if (!labels.isEmpty()) {
                     String item = "";
                     reply = "The suggested list of topics are ";
@@ -248,35 +311,5 @@ public class MainActivity extends AppCompatActivity implements AIListener {
         result = String.format("Basic " + finalCode);
 
         return result;
-    }
-
-    @Override
-    public void onError(AIError error) {
-
-    }
-
-    @Override
-    public void onResult(AIResponse result) {
-
-    }
-
-    @Override
-    public void onAudioLevel(float level) {
-
-    }
-
-    @Override
-    public void onListeningStarted() {
-
-    }
-
-    @Override
-    public void onListeningCanceled() {
-
-    }
-
-    @Override
-    public void onListeningFinished() {
-
     }
 }

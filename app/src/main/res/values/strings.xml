@@ -4,6 +4,11 @@
 
     <string name="ai_client_access_token">330c83acba834b0f8d904734f56df684</string>
 
+    <string name="auth_base_url">https://auth.healthwise.net/v1/oauth2/</string>
+    <string name="taxonomy_base_url">https://taxonomy.healthwise.net/v1</string>
+    <string name="content_base_url">https://content.healthwise.net/v1/topics/%1$s/en-us</string>
+    <string name="search_base_url">https://search.healthwise.net/v1/</string>
+
     <string name="text_intro">Welcome to HealthcareAgent\n\nPress the speech button to begin your search</string>
     <string name="button_speak">Speak to me</string>
 

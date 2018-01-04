@@ -78,8 +78,6 @@ public class TokenRequest2 extends AsyncTask<Void, Void, String> {
             jsonData = response.body().string();
             jobject = new JSONObject(jsonData);
 
-            MainActivity.token = jobject.getString("access_token");
-
             return jobject.getString("access_token");
         } catch (IOException e) {
             Log.e(TAG, "IOException while doing request", e);
